@@ -4,8 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 250, 251, 248;
+  --background-end-rgb: 250, 251, 248;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.text__navigation {
+  @apply text-base uppercase font-normal text-second-color hover:text-text-color hover:font-medium hover:underline hover:underline-offset-4
+}
+
+
