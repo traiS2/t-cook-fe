@@ -8,9 +8,19 @@ module.exports = {
         return [
             {
                 source: "/",
-                destination: "/home",
+                destination: "/home/blog",
                 permanent: true,
             },
         ];
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "www.savourydays.com",
+                port: "",
+                pathname: "/wp-content/uploads/**",
+            },
+        ],
     },
 };

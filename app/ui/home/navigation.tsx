@@ -8,7 +8,7 @@ export default function Navigation() {
     const links = [
         {
             name: "blog",
-            url: "/home",
+            url: "/home/blog",
         },
         {
             name: "danh mục công thức",
@@ -19,28 +19,20 @@ export default function Navigation() {
             url: "",
         },
         {
-            name: "món ăn nổi bật",
-            url: "",
-        },
-        {
-            name: "chuyên mục",
-            url: "",
-        },
-        {
             name: "giới thiệu",
             url: "",
         },
     ];
     return (
-        <div className="flex sticky top-[-2px] items-center justify- border-y-2 bg-second-bg-color">
-            <div className="flex flex-wrap mx-auto w-3/5 justify-center items-center gap-4 ">
+        <div className="flex sticky top-[-2px] items-center justify- border-y-2 bg-sixth-color/90 ">
+            <div className="flex flex-wrap mx-auto w-3/5 justify-center items-center gap-4 mt-1 ">
                 {links.map((link) => {
                     return (
                         <Link
                             key={link.name}
                             href={link.url}
                             className={clsx("text__navigation", {
-                                "!text-text-color !font-medium underline underline-offset-4":
+                                "!text-fifth-color !font-medium underline underline-offset-4":
                                     pathname === link.url,
                             })}
                         >
@@ -52,4 +44,3 @@ export default function Navigation() {
         </div>
     );
 }
-

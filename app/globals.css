@@ -3,31 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 250, 251, 248;
-  --background-end-rgb: 250, 251, 248;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 241, 247, 255;
+
+    --background-end-rgb: 241, 247, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+        )
+        rgb(var(--background-start-rgb));
 }
 
 .text__navigation {
-  @apply text-base uppercase font-normal text-second-color hover:text-text-color hover:font-medium hover:underline hover:underline-offset-4
+    @apply text-base uppercase font-normal text-second-color hover:text-fifth-color hover:font-medium hover:underline hover:underline-offset-4;
 }
 
-
+@layer utilities {
+    .font-allura {
+        font-family: "Allura", cursive;
+    }
+}

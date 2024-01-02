@@ -1,5 +1,8 @@
+import { BlogList } from "@/app/ui"
 export default function Page() {
     return (
-        <div>Blog Page</div>
+        <div>
+            <BlogList />
+        </div>
     )
 }
