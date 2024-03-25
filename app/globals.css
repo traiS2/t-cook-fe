@@ -28,11 +28,14 @@ body {
 }
 
 .text__navigation {
-    @apply text-base uppercase font-normal text-second-color hover:text-fifth-color hover:font-medium hover:underline hover:underline-offset-4;
+    @apply text-base uppercase font-medium text-second-color hover:text-fifth-color hover:font-medium hover:underline hover:underline-offset-4;
 }
 
-@layer utilities {
-    .font-allura {
-        font-family: "Allura", cursive;
+
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 }

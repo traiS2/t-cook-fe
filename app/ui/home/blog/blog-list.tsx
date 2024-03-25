@@ -4,6 +4,7 @@ export default function BlogList() {
         {
             id: 1,
             title: "CÁCH LÀM BURNT CHEESECAKE MỀM MẠI",
+            link: "cach-lam-burnt-cheesecake-mem-mai",
             category: "Bếp nhà mình",
             image: "http://www.savourydays.com/wp-content/uploads/2022/06/IMG_8062-scaled-610x300.jpg",
             date: "Tháng Sáu 18, 2022",
@@ -15,6 +16,7 @@ export default function BlogList() {
         {
             id: 2,
             title: "Cách làm BÁNH CHUỐI YẾN MẠCH SỮA CHUA HEALTHY",
+            link : "cach-lam-banh-chuoi-yen-mach-sua-chua-healthy",
             category: "Bếp nhà mình",
             image: "http://www.savourydays.com/wp-content/uploads/2022/06/IMG_9610-610x300.jpg",
             date: "Tháng Sáu 17, 2022",
@@ -26,6 +28,7 @@ export default function BlogList() {
         {
             id: 3,
             title: "Cách làm CHÈ BÁNH LỌT ĐẬU XANH",
+            link: "cach-lam-che-banh-lot-dau-xanh",
             category: "Việt Nam",
             image: "http://www.savourydays.com/wp-content/uploads/2022/06/IMG_6317-610x300.jpg",
             date: "Thánh Sáu 16, 2022",
@@ -37,6 +40,7 @@ export default function BlogList() {
         {
             id: 4,
             title: "Cách làm CHÂN GÀ NGÂM SẢ ỚT",
+            link: "cach-lam-chan-ga-ngam-sa-ot",
             category: "Bếp nhà mình",
             image: "http://www.savourydays.com/wp-content/uploads/2022/06/8-1-2-610x300.jpg",
             date: "Tháng Sáu 15, 2022",

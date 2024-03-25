@@ -19,7 +19,7 @@ const config: Config = {
                 "third-color": "#dc9db0", //pick
                 "fourth-color": "#545454", //black
                 "fifth-color": "#a77890", //pick text
-                "sixth-color": "#f1f7ff", //white
+                "sixth-color": "#f1f7ff", //white-blue
                 //"primary-color": "#dbeafe",//blue
                 //"second-color": "#9ca3af", //gray
                 "second-bg-color": "#fafbf8",

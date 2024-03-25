@@ -8,11 +8,11 @@ export default function Navigation() {
     const links = [
         {
             name: "blog",
-            url: "/home/blog",
+            url: "/blog",
         },
         {
             name: "danh mục công thức",
-            url: "/home/category",
+            url: "/blog/category",
         },
         {
             name: "cùng học làm bánh",
@@ -32,7 +32,7 @@ export default function Navigation() {
                             key={link.name}
                             href={link.url}
                             className={clsx("text__navigation", {
-                                "!text-fifth-color !font-medium underline underline-offset-4":
+                                "!text-fifth-color underline underline-offset-4":
                                     pathname === link.url,
                             })}
                         >

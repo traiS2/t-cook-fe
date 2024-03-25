@@ -8,10 +8,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <SideNav />
             </div>
             <div className="flex-grow md:overflow-y-auto">
-                <div className="flex rounded-md mx-3 bg-gray-100 md:mx-0 md:my-2 md:mr-2">
+                <div className="flex rounded-md mx-3 bg-primary-color md:mx-0 md:my-2 md:mr-2">
                     <NavBar />
                 </div>
-                <div>{children}</div>
+                <div className="flex rounded-md mx-3 bg-primary-color md:mx-0 md:my-2 md:mr-2">
+                    {children}
+                </div>
             </div>
         </div>
     );
