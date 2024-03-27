@@ -30,7 +30,10 @@ export default function Ingredient({
       <p className="mr-4 text-sm font-medium">Nguyên liệu: </p>
       <div className="flex flex-col gap-2 my-1 rounded-md px-4 py-2">
         {ingredients.map((ingredient, index) => (
-          <p className="relative text-fourth-color bg-sixth-color w-max px-2 rounded-lg">
+          <p
+            key={index}
+            className="relative text-fourth-color bg-sixth-color w-max px-2 rounded-lg"
+          >
             {ingredient}
             <button
               className="absolute right-[-4px] top-[-4px]"

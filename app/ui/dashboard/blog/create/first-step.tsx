@@ -12,6 +12,7 @@ import {
   UploadTaskSnapshot,
 } from "firebase/storage";
 import { storage } from "@/app/config/firebase-config";
+import Image from "next/image";
 
 export default function FirstStep() {
   const { blog, setBlog } = useCreateBlogContext();
@@ -157,11 +158,13 @@ export default function FirstStep() {
       </div>
       <div className="flex w-full items-center space-x-4">
         <div className="shrink-0">
-          <img
+          <Image
             id="preview_img"
             className="h-10 w-16 object-contain rounded-sm"
             src={blog.image}
             alt="Current profile photo"
+            width={500}
+            height={500}
           />
         </div>
         <label className="block">

@@ -145,7 +145,11 @@ export default function SecondStep() {
                                     src="/t-cook-logo-d.png"
                                     alt="Current profile photo"
                                 /> */}
-                <Image className="h-5 w-10 object-contain rounded-sm" />
+                <Image
+                  className="h-5 w-10 object-contain rounded-sm"
+                  width={50}
+                  height={50}
+                />
               </div>
               <label className="block">
                 <input
@@ -157,7 +161,11 @@ export default function SecondStep() {
             </div>
             <div className="absolute  gap-2 right-0 top-[-6px] flex flex-row items-center justify-between ml-0.5">
               <button className="h-auto too" onClick={() => {}}>
-                <Image className="h-3 w-3 bg-white rounded-full" />
+                <Image
+                  className="h-3 w-3 bg-white rounded-full"
+                  width={50}
+                  height={50}
+                />
               </button>
               <button
                 className="h-auto"

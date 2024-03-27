@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-<script
-    src="https://kit.fontawesome.com/915bc6cb74.js"
-    crossOrigin="anonymous"
-></script>;
 
 export const metadata: Metadata = {
     title: "T-Cooking",

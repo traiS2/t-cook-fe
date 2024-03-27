@@ -9,8 +9,8 @@ export default function Sidebar() {
         Món ăn nổi bật
       </h2>
       <div className="w-full flex flex-col justify-center items-center gap-10 pt-4">
-        {outstandingDish.map((dish) => (
-          <div className="px-6">
+        {outstandingDish.map((dish, index) => (
+          <div key={index} className="px-6">
             <Link href={`/blog/${dish.link}`}>
               <article className="flex max-w-[25rem] flex-col overflow-hidden rounded-xl shadow-lg shadow-gray-300 transition-all duration-300 hover:scale-[1.05] hover:shadow-xl dark:shadow-black">
                 <div className="">
