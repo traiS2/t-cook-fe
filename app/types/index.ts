@@ -15,7 +15,7 @@ export interface Blog {
     id: number;
     link: string;
     title: string;
-    category: string;
+    category: [];
     image: string;
     date: string;
     description: string;

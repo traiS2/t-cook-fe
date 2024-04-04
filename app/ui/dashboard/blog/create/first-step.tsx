@@ -28,41 +28,42 @@ export default function FirstStep() {
   };
 
   const handleChangeImage = (e: any) => {
-    if (e.target.files) {
-      setImage(e.target.files[0]);
-    }
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    const newImage = blog.image;
+    newImage.image = url;
+    setBlog({ ...blog, image: newImage });
   };
 
-  const handleUploadImage = async () => {
-    console.log(image);
-    if (!image) return;
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot: UploadTaskSnapshot) => {
-        console.log(snapshot);
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setBlog({ ...blog, image: downloadURL });
-        });
-      }
-    );
-  };
+  // const handleUploadImage = async () => {
+  //   if (!image) return;
+  //   const uploadTask = uploadBytesResumable(storageRef, image);
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot: UploadTaskSnapshot) => {
+  //       console.log(snapshot);
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       console.log("Upload is " + progress + "% done");
+  //       switch (snapshot.state) {
+  //         case "paused":
+  //           console.log("Upload is paused");
+  //           break;
+  //         case "running":
+  //           console.log("Upload is running");
+  //           break;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         setBlog({ ...blog, image: downloadURL });
+  //       });
+  //     }
+  //   );
+  // };
 
   const handleClickedHour = (type: string, hour: number) => {
     if (hour === 0 && type === "-") return;
@@ -161,7 +162,7 @@ export default function FirstStep() {
           <Image
             id="preview_img"
             className="h-10 w-16 object-contain rounded-sm"
-            src={blog.image}
+            src={blog.image.url === "" ? blog.image.image : blog.image.url}
             alt="Current profile photo"
             width={500}
             height={500}
@@ -174,12 +175,12 @@ export default function FirstStep() {
             className="block w-full text-sm file:font-medium file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm  file:bg-white file:text-fourth-color hover:file:bg-blue-200 "
           />
         </label>
-        <button
+        {/* <button
           onClick={handleUploadImage}
           className="flex items-center justify-center h-4 p-4 font-medium text-white bg-second-color rounded-md"
         >
           Tải lên
-        </button>
+        </button> */}
       </div>
       <div>
         <div className="relative w-full  ">

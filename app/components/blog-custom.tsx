@@ -46,7 +46,7 @@ export default function BlogCustom({ blog }: any) {
     <div className="min-h-[100vh] px-2">
       <div className="flex flex-col w-full h-auto items-center justify-start border-b border-second-color pb-4    ">
         <Image
-          src={blog?.image}
+          src={blog.image.url === "" ? blog?.image.image : blog.image.url}
           className="w-full pt-8"
           alt={blog.title}
           width={610}
@@ -172,7 +172,7 @@ export default function BlogCustom({ blog }: any) {
           Cách làm
         </h3>
         {blog.recipes?.map((recipe: any, index: number) => (
-          <div className="py-1" key={recipe.id}>
+          <div className="py-1" key={index}>
             <p
               className={`w-full font-medium h-auto text-fourth-color text-justify py-2 ${textSize[textSizeIndex]}`}
             >
@@ -180,18 +180,18 @@ export default function BlogCustom({ blog }: any) {
               {recipe.name}
             </p>
             {recipe.detailsRecipe &&
-              recipe.detailsRecipe.map((details: any) => (
+              recipe.detailsRecipe?.map((details: any, index: number) => (
                 <p
-                  key={details.id}
+                  key={index}
                   className={`text-fourth-color text-justify py-0.5 indent-4 font-normal ${textSize[textSizeIndex]}`}
                 >
                   <span className="mr-2">-</span>
                   {details}
                 </p>
               ))}
-            {recipe.image_recipe && (
+            {recipe.image && (
               <Image
-                src={recipe.image_recipe}
+                src={recipe.image}
                 className="w-full pt-1 pb-2"
                 alt={blog.title}
                 width={600}

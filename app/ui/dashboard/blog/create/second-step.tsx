@@ -1,14 +1,23 @@
 "use client";
 import { useCreateBlogContext } from "@/app/hook/create-blog-context/create-blog-context";
 import { useState } from "react";
-import { Plus, Dash, Image } from "react-bootstrap-icons";
+import { Plus, Dash } from "react-bootstrap-icons";
+import { Image as ImageIcon } from "react-bootstrap-icons";
+import Image from "next/image";
+
+interface Recipe {
+  name: string;
+  detailsRecipe: string[];
+  image?: string;
+}
+
+interface Image {
+  id: number;
+  image: any;
+}
+
 export default function SecondStep() {
   const { blog, setBlog } = useCreateBlogContext();
-  interface Recipe {
-    name: string;
-    detailsRecipe: string[];
-    image?: string;
-  }
 
   const recipes: Recipe[] = [
     {
@@ -25,6 +34,8 @@ export default function SecondStep() {
       id: recipePostion + 1,
       name: "",
       detailsRecipe: [""],
+      url: "",
+      image: "",
     });
     setBlog({ ...blog, recipes: newRecipes });
   };
@@ -83,6 +94,15 @@ export default function SecondStep() {
     setBlog({ ...blog, recipes: newDetailsRecipe });
   };
 
+  const handleOnChangeImageRecipe = (e: any, index: number) => {
+    console.log(e);
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    const newRicepe = blog.recipes;
+    newRicepe[index].image = url;
+    setBlog({ ...blog, recipes: newRicepe });
+  };
+
   return (
     <div className="flex flex-col w-full h-auto">
       <div className="flex w-ful flex-col h-auto">
@@ -139,29 +159,34 @@ export default function SecondStep() {
             </div>
             <div className="flex w-full mt-1.5 mb-0.5 items-center space-x-4">
               <div className="shrink-0 ">
-                {/* <img
-                                    id="preview_img"
-                                    className="h-10 3 w-16 object-contain rounded-sm"
-                                    src="/t-cook-logo-d.png"
-                                    alt="Current profile photo"
-                                /> */}
-                <Image
-                  className="h-5 w-10 object-contain rounded-sm"
-                  width={50}
-                  height={50}
-                />
+                {blog.recipes[indexR].image === "" ? (
+                  <ImageIcon
+                    className="h-5 w-10 object-contain rounded-sm"
+                    width={50}
+                    height={50}
+                  />
+                ) : (
+                  <Image
+                    id="preview_img"
+                    className="h-10 3 w-16 object-contain rounded-sm"
+                    src={blog.recipes[indexR].image}
+                    alt="Current profile photo"
+                    width={50}
+                    height={50}
+                  />
+                )}
               </div>
               <label className="block">
                 <input
                   type="file"
-                  // onChange="loadFile(event)"
+                  onChange={(e) => handleOnChangeImageRecipe(e, indexR)}
                   className="block w-full text-sm file:font-medium file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-sm  file:bg-white file:text-fourth-color hover:file:bg-blue-200 "
                 />
               </label>
             </div>
-            <div className="absolute  gap-2 right-0 top-[-6px] flex flex-row items-center justify-between ml-0.5">
+            <div className="absolute gap-2 right-0 top-[-6px] flex flex-row items-center justify-between ml-0.5">
               <button className="h-auto too" onClick={() => {}}>
-                <Image
+                <ImageIcon
                   className="h-3 w-3 bg-white rounded-full"
                   width={50}
                   height={50}
@@ -182,18 +207,6 @@ export default function SecondStep() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div>
-        {/* <button
-                    id="createRecipetButton"
-                    className="inline-flex mt-4 items-center justify-center pr-3 pl-1 py-1.5 text-sm font-medium text-center text-fourth-color bg-blue-200 rounded-lg bg-primary-700 hover:bg-blue-300 hover:text-white sm:w-auto "
-                    type="button"
-                    onClick={() => {}}
-                >
-                    <Plus className="h-4 w-4" />
-                    Thêm bước
-                </button> */}
       </div>
     </div>
   );
