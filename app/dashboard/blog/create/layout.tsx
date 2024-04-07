@@ -12,6 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     image: {
       image: "/t-cook-logo-d.png",
       url: "",
+      file: "",
     },
     introduction: [""],
     levelOfDifficulty: 1,
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         detailsRecipe: [""],
         url: "",
         image: "",
+        file: "",
       },
     ],
     date: "",
@@ -36,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <CreateBlogContext.Provider value={{ blog, setBlog }}>
       <div className="flex w-full">
         <div className="flex h-auto w-1/2">{children}</div>
-        <div className="w-1/2 h-[90vh] overflow-y-auto">
+        <div className="w-1/2 overflow-y-auto">
           <BlogCustom blog={blog} />
         </div>
       </div>

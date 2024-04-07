@@ -5,12 +5,7 @@ import { useCreateBlogContext } from "@/app/hook/create-blog-context/create-blog
 import { Dash, Plus } from "react-bootstrap-icons";
 import cryptoRandomString from "crypto-random-string";
 
-import {
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-  UploadTaskSnapshot,
-} from "firebase/storage";
+import { ref } from "firebase/storage";
 import { storage } from "@/app/config/firebase-config";
 import Image from "next/image";
 
@@ -30,9 +25,14 @@ export default function FirstStep() {
   const handleChangeImage = (e: any) => {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
-    const newImage = blog.image;
-    newImage.image = url;
-    setBlog({ ...blog, image: newImage });
+    setBlog({
+      ...blog,
+      image: {
+        ...blog.image,
+        image: url,
+        file: file,
+      },
+    });
   };
 
   // const handleUploadImage = async () => {

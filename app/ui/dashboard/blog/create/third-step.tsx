@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { NextResponse } from "next/server";
 import ReactSelectCreatable from "react-select/creatable";
 import { useCreateBlogContext } from "@/app/hook/create-blog-context/create-blog-context";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "@/app/config/firebase-config";
+import cryptoRandomString from "crypto-random-string";
 
 interface Category {
   id: number;
@@ -26,8 +29,6 @@ interface SelectTag {
   __isNew__?: boolean;
 }
 
-
-
 export default function ThirdStep() {
   const { blog, setBlog } = useCreateBlogContext();
 
@@ -49,8 +50,6 @@ export default function ThirdStep() {
   };
 
   const handleOnChangeTag = (e: any) => {
-    console.log(e);
-
     const newTags: Tag[] = e.map((value: any) => {
       return {
         id: value.value,
@@ -61,6 +60,8 @@ export default function ThirdStep() {
     const newBlog = { ...blog, tags: newTags };
     setBlog(newBlog);
   };
+
+  console.log(blog);
 
   async function getCategories() {
     try {
@@ -84,6 +85,52 @@ export default function ThirdStep() {
     }
   }
 
+  const uploadFileImage = async (image: any) => {
+    try {
+      const imageRef = ref(
+        storage,
+        `images/${cryptoRandomString({ length: 12 })}`
+      );
+      const snapshot = await uploadBytes(imageRef, image);
+      const url = await getDownloadURL(snapshot.ref);
+      setBlog({ ...blog, image: { ...image, url: url } });
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const handleOnClickCreateBlog = async () => {
+    if (blog?.image?.file !== "") {
+      uploadFileImage(blog.image.file);
+    }
+    uploadAllFiles();
+  };
+
+  const uploadAllFiles = async () => {
+    const promises = [];
+
+    const uploadFile = async (imageRef: any, file: any, pos: any) => {
+      const snapshot = await uploadBytes(imageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      const updatedBlog = { ...blog };
+      updatedBlog.recipes[pos].url = url;
+      setBlog(updatedBlog);
+    };
+
+    for (let i = 0; i < blog.recipes.length; i++) {
+      if (blog.recipes[i].file !== "") {
+        const imageRef = ref(
+          storage,
+          `images/${cryptoRandomString({ length: 12 })}`
+        );
+
+        promises.push(uploadFile(imageRef, blog.recipes[i].file, i));
+      }
+    }
+
+    await Promise.all(promises);
+  };
+
   async function getTags() {
     try {
       const tagsJson = await fetch(process.env.DATA_API_KEY_FE + "/tag");
@@ -105,7 +152,6 @@ export default function ThirdStep() {
     getCategories();
     getTags();
   }, []);
-  console.log(blog);
 
   return (
     <div>
@@ -143,6 +189,15 @@ export default function ThirdStep() {
           onChange={(e) => handleOnChangeTag(e)}
         />
       </fieldset>
+      <div className="flex justify-center items-center">
+        <button
+          className="flex pointer items-center justify-center mt-4 mx-1 py-1 px-10 text-sm font-bold text-center text-fourth-color bg-blue-200 rounded-lg bg-primary-700 hover:bg-blue-300 hover:text-white sm:w-auto"
+          id="createProductButton"
+          onClick={handleOnClickCreateBlog}
+        >
+          Tạo
+        </button>
+      </div>
     </div>
   );
 }

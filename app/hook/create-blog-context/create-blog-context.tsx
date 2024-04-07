@@ -6,6 +6,7 @@ interface Recipe {
   detailsRecipe: string[];
   url: string;
   image: any;
+  file: any;
 }
 
 interface Category {
@@ -22,6 +23,7 @@ interface Tag {
 interface Image {
   image: any;
   url: string;
+  file: any;
 }
 
 interface CreateBlogContextState {
@@ -53,6 +55,7 @@ export const CreateBlogContext = createContext<CreateBlogContextState>({
     image: {
       image: "",
       url: "",
+      file: "",
     },
     introduction: [],
     levelOfDifficulty: 0,

@@ -46,7 +46,7 @@ export default function BlogCustom({ blog }: any) {
     <div className="min-h-[100vh] px-2">
       <div className="flex flex-col w-full h-auto items-center justify-start border-b border-second-color pb-4    ">
         <Image
-          src={blog.image.url === "" ? blog?.image.image : blog.image.url}
+          src={blog?.image?.url === "" ? blog?.image.image : blog.image?.url}
           className="w-full pt-8"
           alt={blog.title}
           width={610}

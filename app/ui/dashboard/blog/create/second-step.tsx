@@ -19,15 +19,6 @@ interface Image {
 export default function SecondStep() {
   const { blog, setBlog } = useCreateBlogContext();
 
-  const recipes: Recipe[] = [
-    {
-      name: "",
-      detailsRecipe: [""],
-    },
-  ];
-
-  const [recipe, setRecipes] = useState<Recipe[]>(recipes);
-
   const handleClickAddRecipe = (recipePostion: number) => {
     const newRecipes = [...blog.recipes];
     newRecipes.splice(recipePostion + 1, 0, {
@@ -36,6 +27,7 @@ export default function SecondStep() {
       detailsRecipe: [""],
       url: "",
       image: "",
+      file: "",
     });
     setBlog({ ...blog, recipes: newRecipes });
   };
@@ -62,16 +54,18 @@ export default function SecondStep() {
     setBlog({ ...blog, recipe: newRecipes });
   };
 
+  console.log(blog);
+
   const handleClickMunisDetailsRecipe = (
     recipePostion: number,
     detailsRecipePotion: number
   ) => {
-    if (recipe[recipePostion].detailsRecipe.length === 1) return;
+    if (blog.recipes[recipePostion].detailsRecipe.length === 1) return;
     const userChoice = confirm("Bạn có chắc muốn xoá không?");
     if (!userChoice) return;
-    const newRecipes = [...recipe];
+    const newRecipes = [...blog.recipes];
     newRecipes[recipePostion].detailsRecipe.splice(detailsRecipePotion, 1);
-    setRecipes(newRecipes);
+    setBlog({ ...blog, recipes: newRecipes });
   };
 
   const handleOnChangeNameRecipe = (
@@ -95,11 +89,11 @@ export default function SecondStep() {
   };
 
   const handleOnChangeImageRecipe = (e: any, index: number) => {
-    console.log(e);
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
     const newRicepe = blog.recipes;
     newRicepe[index].image = url;
+    newRicepe[index].file = file;
     setBlog({ ...blog, recipes: newRicepe });
   };
 

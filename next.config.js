@@ -28,4 +28,5 @@ module.exports = {
     DATA_API_KEY_BE: process.env.DATA_API_KEY_BE,
     DATA_API_KEY_FE: process.env.DATA_API_KEY_FE,
   },
+  reactStrictMode: true,
 };
