@@ -27,29 +27,12 @@ interface Image {
 }
 
 interface CreateBlogContextState {
-  blog: {
-    id: number;
-    link: string;
-    title: string;
-    categories: Category[];
-    image: Image;
-    introduction: string[];
-    levelOfDifficulty: number;
-    cookingTime: number;
-    servingSize: number;
-    ingredients: string[];
-    recipes: Recipe[];
-    date: string;
-    tags: Tag[];
-    user: string;
-  };
+  blog: BlogCreationState;
   setBlog: (blog: any) => void;
 }
 
 export const CreateBlogContext = createContext<CreateBlogContextState>({
   blog: {
-    id: 0,
-    link: "",
     title: "",
     categories: [],
     image: {
@@ -63,9 +46,7 @@ export const CreateBlogContext = createContext<CreateBlogContextState>({
     servingSize: 0,
     ingredients: [""],
     recipes: [],
-    date: "",
     tags: [],
-    user: "",
   },
   setBlog: () => {},
 });
