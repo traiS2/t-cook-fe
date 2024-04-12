@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="">
             <Header />
             <LogoHeader />
-            <Navigation />
+            <Navigation/>
             <div className="w-full h-auto">
                 <div className="flex mx-auto w-full justify-center md:w-3/5">
                     <div className="w-[65%]">{children}</div>

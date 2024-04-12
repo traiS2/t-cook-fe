@@ -16,7 +16,7 @@ const config: Config = {
             colors: {
                 "primary-color": "#dbeafe", //blue
                 "second-color": "#9ca3af", //gray
-                "third-color": "#dc9db0", //pick
+                "third-color": "#dc9db0", //pink
                 "fourth-color": "#545454", //black
                 "fifth-color": "#a77890", //pick text
                 "sixth-color": "#f1f7ff", //white-blue

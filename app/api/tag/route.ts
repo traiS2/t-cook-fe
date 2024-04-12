@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 interface Tag {
@@ -7,7 +8,14 @@ interface Tag {
 
 export async function GET() {
   try {
-    const res = await fetch(process.env.DATA_API_KEY_BE + "/tag/get-all-tags");
+    const cookieStore = cookies();
+    const jwtCookie = cookieStore.get("t-cook");
+    const res = await fetch(process.env.DATA_API_KEY_BE + "/api/tag/get-all-tags", {
+      cache: "no-store",
+      headers: {
+        Cookie: `t-cook=${jwtCookie?.value}`,
+      },
+    });
     if (res.ok) {
       const tags: Tag[] = await res.json();
       return NextResponse.json(tags);

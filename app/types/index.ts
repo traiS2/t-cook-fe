@@ -1,37 +1,24 @@
-import { ElementType, MouseEventHandler, ReactElement } from "react";
-import { IconProps } from "react-bootstrap-icons";
+import { MouseEventHandler } from "react";
 
 export interface CustomSearchProps {
-    title: string;
-    handleClick?: MouseEventHandler<HTMLButtonElement>;
+  title: string;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface CustomIconButtonLinkProps {
-    title: string;
-    icon?: React.ElementType;
-}
-
-export interface Blog {
-    id: number;
-    link: string;
-    title: string;
-    category: [];
-    image: string;
-    date: string;
-    description: string;
-    tags: string[];
-    user: string;
+  title: string;
+  icon?: React.ElementType;
 }
 
 export interface BreadcrumbNavigation {
-    name: string;
-    href: string;
-    current: boolean;
+  name: string;
+  href: string;
+  current: boolean;
 }
 
 export interface IconButtonCustomProps {
-    title: string;
-    style?: string;
-    icon?: any
-    handleClick?: MouseEventHandler<HTMLButtonElement>;
+  title: string;
+  style?: string;
+  icon?: any;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
 }

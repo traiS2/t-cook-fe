@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <div className="flex sticky top-6 bottom-4 flex-col justify-center items-center py-10">
+    <div className="flex z-0 sticky top-6 bottom-4 flex-col justify-center items-center py-10">
       <h2 className="flex w-full h-auto items-center justify-center pt-4 text-xl font-semibold uppercase text-fifth-color ">
         Món ăn nổi bật
       </h2>

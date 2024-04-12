@@ -22,12 +22,13 @@ export default function SecondStep() {
   const handleClickAddRecipe = (recipePostion: number) => {
     const newRecipes = [...blog.recipes];
     newRecipes.splice(recipePostion + 1, 0, {
-      id: recipePostion + 1,
       name: "",
       detailsRecipe: [""],
-      url: "",
-      image: "",
-      file: "",
+      image: {
+        image: "",
+        url: "",
+        file: "",
+      },
     });
     setBlog({ ...blog, recipes: newRecipes });
   };
@@ -92,8 +93,8 @@ export default function SecondStep() {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
     const newRicepe = blog.recipes;
-    newRicepe[index].image = url;
-    newRicepe[index].file = file;
+    newRicepe[index].image.image = url;
+    newRicepe[index].image.file = file;
     setBlog({ ...blog, recipes: newRicepe });
   };
 
@@ -153,7 +154,7 @@ export default function SecondStep() {
             </div>
             <div className="flex w-full mt-1.5 mb-0.5 items-center space-x-4">
               <div className="shrink-0 ">
-                {blog.recipes[indexR].image === "" ? (
+                {blog.recipes[indexR].image.image === "" ? (
                   <ImageIcon
                     className="h-5 w-10 object-contain rounded-sm"
                     width={50}
@@ -163,7 +164,7 @@ export default function SecondStep() {
                   <Image
                     id="preview_img"
                     className="h-10 3 w-16 object-contain rounded-sm"
-                    src={blog.recipes[indexR].image}
+                    src={blog.recipes[indexR]?.image.image}
                     alt="Current profile photo"
                     width={50}
                     height={50}

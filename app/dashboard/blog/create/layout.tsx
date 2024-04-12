@@ -4,9 +4,7 @@ import { CreateBlogContext } from "@/app/hook/create-blog-context/create-blog-co
 import { useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [blog, setBlog] = useState<any>({
-    id: 0,
-    link: "",
+  const [blog, setBlog] = useState<BlogCreationState>({
     title: "",
     categories: [],
     image: {
@@ -21,17 +19,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     ingredients: [],
     recipes: [
       {
-        id: 0,
         name: "",
         detailsRecipe: [""],
-        url: "",
-        image: "",
-        file: "",
+        image: {
+          image: "",
+          url: "",
+          file: "",
+        },
       },
     ],
-    date: "",
     tags: [],
-    user: "",
   });
 
   return (

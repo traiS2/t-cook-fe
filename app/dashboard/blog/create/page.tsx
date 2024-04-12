@@ -1,6 +1,6 @@
 "use client";
 import { BreadcrumbNavigation } from "@/app/components";
-import { FirstStep, SecondStep, ThirdStep } from "@/app/ui";
+import { FirstStep, SecondStep, ThirdStep } from "@/app/components";
 import clsx from "clsx";
 import { useState } from "react";
 
