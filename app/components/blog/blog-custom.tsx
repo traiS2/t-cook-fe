@@ -191,7 +191,7 @@ export default function BlogCustom({ blog }: any) {
               ))}
             {recipe.image && (
               <Image
-                src={recipe.image}
+                src={recipe.image.image}
                 className="w-full pt-1 pb-2"
                 alt={blog.title}
                 width={600}

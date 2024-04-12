@@ -1,3 +1,4 @@
+"use client";
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { NextResponse } from "next/server";
@@ -61,30 +62,6 @@ export default function ThirdStep() {
     setBlog(newBlog);
   };
 
-  console.log(blog);
-
-  async function getCategories() {
-    try {
-      const categoriesJson = await fetch(
-        process.env.DATA_API_KEY_FE + "/category"
-      );
-      const categoriesData: Category[] = await categoriesJson.json();
-      const newCategoriesData: SelectCategory[] = categoriesData.map(
-        (category) => ({
-          value: category.id,
-          label: category.name,
-        })
-      );
-
-      setSelectCategories(newCategoriesData);
-    } catch (error) {
-      return NextResponse.json(
-        { message: "Internal NextJS Error" },
-        { status: 500 }
-      );
-    }
-  }
-
   const uploadFileImage = async (image: any) => {
     try {
       const imageRef = ref(
@@ -113,27 +90,48 @@ export default function ThirdStep() {
       const snapshot = await uploadBytes(imageRef, file);
       const url = await getDownloadURL(snapshot.ref);
       const updatedBlog = { ...blog };
-      updatedBlog.recipes[pos].url = url;
+      updatedBlog.recipes[pos].image.url = url;
       setBlog(updatedBlog);
     };
 
     for (let i = 0; i < blog.recipes.length; i++) {
-      if (blog.recipes[i].file !== "") {
+      if (blog.recipes[i].image.file !== "") {
         const imageRef = ref(
           storage,
           `images/${cryptoRandomString({ length: 12 })}`
         );
 
-        promises.push(uploadFile(imageRef, blog.recipes[i].file, i));
+        promises.push(uploadFile(imageRef, blog.recipes[i].image.file, i));
       }
     }
 
     await Promise.all(promises);
   };
 
+  async function getCategories() {
+    try {
+      const categoriesJson = await fetch(
+        process.env.DATA_API_KEY_FE + "/category"
+      );
+      const categoriesData: Category[] = await categoriesJson.json();
+      const newCategoriesData: SelectCategory[] = categoriesData.map(
+        (category) => ({
+          value: category.id,
+          label: category.name,
+        })
+      );
+      setSelectCategories(newCategoriesData);
+    } catch (error) {
+      return NextResponse.json(
+        { message: "Internal NextJS Error" },
+        { status: 500 }
+      );
+    }
+  }
+
   async function getTags() {
     try {
-      const tagsJson = await fetch(process.env.DATA_API_KEY_FE + "/tag");
+      const tagsJson = await fetch(process.env.DATA_API_KEY_FE + "/api/tag");
       const tagsData: Tag[] = await tagsJson.json();
       const newTagsData: SelectTag[] = tagsData.map((tag) => ({
         value: tag.id,

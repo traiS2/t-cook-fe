@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "react-bootstrap-icons";
 import ViewMoreButton from "./view-more-button";
-import { Blog } from "@/app/types";
 import Link from "next/link";
 export default function Blog({
     id,
@@ -12,7 +10,7 @@ export default function Blog({
     image,
     user,
     description,
-}: Blog) {
+}: any) {
     return (
         <div className="w-full h-auto border-b border-second-color my-8 ">
             <Link href={`/blog/${link}`}>
@@ -28,7 +26,7 @@ export default function Blog({
                 bới <span className="font-normal text-fifth-color">{user}</span>
             </p>
             <Image
-                className="object-cover w-full my-4"
+                className="object-cover w-full my-4 rounded-md"
                 alt="image food"
                 height={100}
                 width={600}
