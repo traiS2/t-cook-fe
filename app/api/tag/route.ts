@@ -10,7 +10,7 @@ export async function GET() {
   try {
     const cookieStore = cookies();
     const jwtCookie = cookieStore.get("t-cook");
-    const res = await fetch(process.env.DATA_API_KEY_BE + "/api/tag/get-all-tags", {
+    const res = await fetch(process.env.DATA_API_KEY_BE + "/api/tag/get-all-tag", {
       cache: "no-store",
       headers: {
         Cookie: `t-cook=${jwtCookie?.value}`,

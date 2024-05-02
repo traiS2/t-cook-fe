@@ -1,5 +1,6 @@
 import SideNav from "../ui/dashboard/sidenav";
 import NavBar from "../ui/dashboard/navbar";
+import { Suspense } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

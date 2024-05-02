@@ -11,7 +11,7 @@ export async function GET() {
     const jwtCookie = cookieStore.get("t-cook");
     const res = await fetch(
       process.env.DATA_API_KEY_BE +
-        "/api/category/get-all-category-by-active-status",
+        "/api/category/get-all-category-by-show-status",
       {
         cache: "no-store",
         headers: {

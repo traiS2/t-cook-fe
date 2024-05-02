@@ -16,6 +16,7 @@ export default function SideNav() {
                     height={200}
                     alt="logo-d"
                     priority
+                    objectFit="cover"
                 />
             </Link>
             <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">

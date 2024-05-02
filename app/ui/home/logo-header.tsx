@@ -8,6 +8,7 @@ export default function LogoHeader() {
                 width={400}
                 height={133}
                 className="w-max-1/3 h-auto object-contain"
+                objectFit="cover"
             />
         </div>
     );

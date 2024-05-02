@@ -1,3 +1,14 @@
+"use client";
+import { useEffect } from "react";
+
 export default function Page() {
-    return <p>Dashboard Page</p>
+    useEffect(() => {
+        getBlogs();
+    }, []);
+
+    async function getBlogs() {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
+    return <p>Dashboard Page</p>;
 }

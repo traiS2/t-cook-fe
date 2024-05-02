@@ -1,5 +1,7 @@
-'use client'
+"use client";
+import { Suspense } from "react";
 import { Header, LogoHeader, Navigation, Sidebar, Footer } from "../ui";
+
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="">
@@ -7,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <LogoHeader />
             <Navigation />
             <div className="w-full h-auto">
-                <div className="flex mx-auto w-full justify-center md:w-3/5">
+                <div className="flex mx-auto min-h-screen w-full justify-center md:w-3/5">
                     <div className="w-[65%]">{children}</div>
                     <div className="w-[35%]">
                         <Sidebar />

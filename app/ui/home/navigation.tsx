@@ -24,7 +24,7 @@ export default function Navigation() {
     },
   ];
   return (
-    <div className="flex sticky z-10 top-[-2px] items-center justify- border-y-2 bg-sixth-color/90 ">
+    <div className="flex sticky  z-10 top-[-2px] items-center justify-center border-y-2 bg-sixth-color/90 ">
       <div className="flex flex-wrap mx-auto w-3/5 justify-center items-center gap-4 mt-1 ">
         {links.map((link) => {
           return (
@@ -36,7 +36,7 @@ export default function Navigation() {
                   pathname === link.url,
               })}
             >
-              <p className="pb-1 ">{link.name}</p>
+              <p className="pb-1 text-lg font-bold">{link.name}</p>
             </Link>
           );
         })}

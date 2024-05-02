@@ -1,6 +1,6 @@
 interface ImagePost {}
 
-interface ImageCreationState {
+interface ImageBlogCreationState {
   image: string; // url from image file
   url: string;
   file: any;

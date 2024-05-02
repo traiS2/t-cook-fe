@@ -16,6 +16,12 @@ import { blog } from "../../../data";
 export default function Page() {
     const params = useParams<{ content: string }>();
 
+    getBlog();
+
+    async function getBlog() {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
     type TextSizeType = {
         [key: number]: string;
     };
@@ -60,6 +66,7 @@ export default function Page() {
                     alt={blog.title}
                     width={610}
                     height={300}
+                    objectFit="cover"
                 />
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
                     {blog.title}

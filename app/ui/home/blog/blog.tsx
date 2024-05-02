@@ -1,29 +1,36 @@
 import Image from "next/image";
 import ViewMoreButton from "./view-more-button";
 import Link from "next/link";
+import { format } from "date-fns";
+import { ta, vi } from "date-fns/locale";
 export default function Blog({
     id,
+    name,
     link,
-    title,
-    date,
-    category,
     image,
+    createAt,
+    introduction,
+    tags,
     user,
-    description,
-}: any) {
+}: BlogSummary) {
+    const introductionCustom =
+        introduction.join(" ").split(" ").slice(0, 100).join(" ") + "[...]";
+    const formattedDate = format(createAt, "PP", { locale: vi });
     return (
         <div className="w-full h-auto border-b border-second-color my-8 ">
             <Link href={`/blog/${link}`}>
-                <h1 className="text-2xl font-semibold uppercase text-fifth-color mt-2 mb-1">
-                    {title}
+                <h1 className="text-2xl font-semibold uppercase text-fifth-color">
+                    {name}
                 </h1>
             </Link>
-            <p className="text-xs font-bold my-1 text-second-color">
+            <p className="text-xs font-bold text-second-color">
                 Đăng vào{" "}
-                <span className="font-normal text-fifth-color">{date}</span> |
-                trong{" "}
-                <span className="font-normal text-fifth-color">{category}</span>{" "}
-                bới <span className="font-normal text-fifth-color">{user}</span>
+                <span className="font-semibold text-fifth-color">
+                    {formattedDate}
+                </span>{" "}
+                {/* | trong{" "} */}
+                {/* <span className="font-normal text-fifth-color">{category}</span>{" "} */}
+                bởi <span className="font-semibold text-fifth-color">{user}</span>
             </p>
             <Image
                 className="object-cover w-full my-4 rounded-md"
@@ -31,10 +38,13 @@ export default function Blog({
                 height={100}
                 width={600}
                 src={image}
+                objectFit="cover"
             />
-            <p className=" text-justify text-fourth-color">{description}</p>
+            <p className=" text-justify text-fourth-color">
+                {introductionCustom}
+            </p>
             <p className="text-sm mt-4 text-fifth-color italic">
-                Tags: <span className="font-normal">bánh cheesecake</span>,
+                Tags: <span className="font-normal">{tags.join(", ")}</span>
             </p>
             <ViewMoreButton link={link} />
         </div>
