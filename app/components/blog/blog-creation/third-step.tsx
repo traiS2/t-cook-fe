@@ -176,12 +176,7 @@ export default function ThirdStep() {
                     recipe: [
                         {
                             name: "",
-                            detailRecipe: [
-                                {
-                                    id: 0,
-                                    content: "",
-                                },
-                            ],
+                            detailRecipe: [""],
                             image: {
                                 image: "",
                                 url: "",

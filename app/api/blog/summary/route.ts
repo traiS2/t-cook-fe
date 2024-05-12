@@ -1,7 +1,7 @@
 export async function GET() {
   try {
     const res = await fetch(
-      process.env.DATA_API_KEY_BE + "/api/blog/get-blog-summary",
+      process.env.DATA_API_KEY_BE + "/api/blog/get-summary-blog",
       {
         next: { revalidate: 0 },
       }

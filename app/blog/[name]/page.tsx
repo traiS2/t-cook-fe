@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     Alarm,
     Person,
@@ -10,11 +9,37 @@ import {
     Dash,
     StarFill,
 } from "react-bootstrap-icons";
+import { format, isValid, parseISO } from "date-fns";
+import { vi } from "date-fns/locale";
 
-import { blog } from "../../../data";
+export default function Page({ params }: { params: { name: string } }) {
+    // const params = useParams<{ content: string }>();
 
-export default function Page() {
-    const params = useParams<{ content: string }>();
+    const [detailBlog, setDetailBlog] = useState<DetailBlog>({} as DetailBlog);
+
+    async function getDetailBlog() {
+        try {
+            const response = await fetch(
+                process.env.DATA_API_KEY_FE + "/api/blog/detail/" + params.name
+            );
+            if (response.ok) {
+                const blog = await response.json();
+                const formatedDate = format(parseISO(blog.createAt), "PP", {
+                    locale: vi,
+                });
+                blog.createAt = formatedDate;
+                setDetailBlog(blog);
+            } else {
+                alert("Failed to fetch data at blog detail");
+            }
+        } catch (error: any) {
+            alert("Failed to error fetch data at blog detail" + error);
+        }
+    }
+
+    useEffect(() => {
+        getDetailBlog();
+    }, []);
 
     getBlog();
 
@@ -56,33 +81,33 @@ export default function Page() {
             <div className="flex w-full py-4 border-b border-second-color">
                 <h1 className="w-full flex gap-2 italic text-base text-fifth-color font-normal">
                     Trang chủ <span className="text-sm">{` >> `}</span> Blog{" "}
-                    <span className="text-sm">{` >> `}</span> {blog.title}
+                    <span className="text-sm">{` >> `}</span> {detailBlog.name}
                 </h1>
             </div>
             <div className="flex flex-col w-full h-auto items-center justify-start border-b border-second-color pb-4    ">
                 <Image
-                    src={blog.image}
+                    src={detailBlog.image}
                     className="w-full pt-8"
-                    alt={blog.title}
+                    alt={detailBlog.name}
                     width={610}
                     height={300}
                     objectFit="cover"
                 />
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
-                    {blog.title}
+                    {detailBlog.name}
                 </h1>
                 <p className="w-full h-auto items-center justify-start text-xs font-bold pt-1 text-second-color">
                     Đăng vào{" "}
                     <span className="font-medium text-fifth-color">
-                        {blog.date}
+                        {detailBlog.createAt}
                     </span>{" "}
                     | trong{" "}
                     <span className="font-medium text-fifth-color">
-                        {blog.category}
+                        {/* {blog.category} */}
                     </span>{" "}
                     bởi{" "}
                     <span className="font-medium text-fifth-color">
-                        {blog.user}
+                        {detailBlog.user}
                     </span>
                 </p>
             </div>
@@ -94,7 +119,7 @@ export default function Page() {
                             Thời gian nấu
                         </p>
                         <p className="text-sm font-semibold text-second-color">
-                            60 phút
+                            {detailBlog.cookingTime} phút
                         </p>
                     </div>
                 </div>
@@ -105,7 +130,7 @@ export default function Page() {
                             Khẩu phần ăn
                         </p>
                         <p className="text-sm font-semibold text-second-color">
-                            4 người
+                            {detailBlog.servingSize}
                         </p>
                     </div>
                 </div>
@@ -120,7 +145,7 @@ export default function Page() {
                                 <StarFill
                                     key={i}
                                     className={`w-4 h-4 ${
-                                        i <= blog.levelOfDifficulty
+                                        i <= detailBlog.levelOfDifficulty
                                             ? "text-yellow-500"
                                             : "text-second-color"
                                     }`}
@@ -151,20 +176,22 @@ export default function Page() {
                 </div>
             </div>
             <div className="flex flex-col w-full h-auto pt-2">
-                {blog.introduction.map((paragraph, index) => (
-                    <p
-                        key={index}
-                        className={`w-full h-auto text-fourth-color text-justify py-2 indent-8  ${textSize[textSizeIndex]}`}
-                    >
-                        {paragraph}
-                    </p>
-                ))}
+                {detailBlog.introduction
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((introduction) => (
+                        <p
+                            key={introduction.id}
+                            className={`w-full h-auto text-fourth-color text-justify py-2 indent-8  ${textSize[textSizeIndex]}`}
+                        >
+                            {introduction.content}
+                        </p>
+                    ))}
                 <h1
                     className={`flex w-full h-auto items-center justify-start pt-4 ${
                         textSize[textSizeIndex + 2 > 5 ? 5 : textSizeIndex + 2]
                     } font-normal uppercase text-fifth-color`}
                 >
-                    {blog.title}
+                    {detailBlog.name}
                 </h1>
                 <h3
                     className={`font-semibold text-fourth-color pt-2 ${textSize[textSizeIndex]}`}
@@ -172,58 +199,64 @@ export default function Page() {
                     Nguyên liệu
                 </h3>
                 <ul className="list-disc list-inside pt-2">
-                    {blog.ingredients.map((ingredient) => (
-                        <li
-                            key={ingredient.id}
-                            className={`text-fourth-color pt-1 italic indent-8 ${textSize[textSizeIndex]}`}
-                        >
-                            {ingredient.content}
-                        </li>
-                    ))}
+                    {detailBlog.ingredient
+                        ?.sort((a, b) => a.id - b.id)
+                        .map((ingredient) => (
+                            <li
+                                key={ingredient.id}
+                                className={`text-fourth-color pt-1 italic indent-8 ${textSize[textSizeIndex]}`}
+                            >
+                                {ingredient.name}
+                            </li>
+                        ))}
                 </ul>
-                {blog.note.map((note) => (
+                {/* {blog.note.map((note) => (
                     <p
                         key={note.id}
                         className={`text-fourth-color pt-4 italic ${textSize[textSizeIndex]}`}
                     >
                         <span>**</span> {note.content}
                     </p>
-                ))}
+                ))} */}
                 <h3
                     className={`font-semibold text-fourth-color pt-2 ${textSize[textSizeIndex]}`}
                 >
                     Cách làm
                 </h3>
-                {blog.recipes.map((recipe) => (
-                    <div className="py-1" key={recipe.id}>
-                        <p
-                            className={`w-full font-medium h-auto text-fourth-color text-justify py-2 ${textSize[textSizeIndex]}`}
-                        >
-                            <span className="mr-2">{recipe.id}.</span>
-                            {recipe.content}
-                        </p>
-                        {recipe.details_recipe &&
-                            recipe.details_recipe.map((detail) => (
-                                <p
-                                    key={detail.id}
-                                    className={`text-fourth-color text-justify py-0.5 indent-4 font-normal ${textSize[textSizeIndex]}`}
-                                >
-                                    <span className="mr-2">-</span>
-                                    {detail.content}
-                                </p>
-                            ))}
-                        {recipe.image_recipe && (
-                            <Image
-                                src={recipe.image_recipe}
-                                className="w-full pt-1 pb-2"
-                                alt={blog.title}
-                                width={600}
-                                height={300}
-                                objectFit="cover"
-                            />
-                        )}
-                    </div>
-                ))}
+                {detailBlog.recipe
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((recipe) => (
+                        <div className="py-1" key={recipe.id}>
+                            <p
+                                className={`w-full font-medium h-auto text-fourth-color text-justify py-2 ${textSize[textSizeIndex]}`}
+                            >
+                                <span className="mr-2">{recipe.id + 1}.</span>
+                                {recipe.name}
+                            </p>
+                            {recipe.detailRecipe &&
+                                recipe.detailRecipe
+                                    ?.sort((a, b) => a.id - b.id)
+                                    .map((detail) => (
+                                        <p
+                                            key={detail.id}
+                                            className={`text-fourth-color text-justify py-0.5 indent-4 font-normal ${textSize[textSizeIndex]}`}
+                                        >
+                                            <span className="mr-2">-</span>
+                                            {detail.content}
+                                        </p>
+                                    ))}
+                            {recipe.image && (
+                                <Image
+                                    src={recipe.image}
+                                    className="w-full pt-1 pb-2"
+                                    alt={detailBlog.name + recipe}
+                                    width={600}
+                                    height={300}
+                                    objectFit="cover"
+                                />
+                            )}
+                        </div>
+                    ))}
             </div>
         </div>
     );

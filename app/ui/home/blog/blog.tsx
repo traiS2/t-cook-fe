@@ -10,11 +10,18 @@ export default function Blog({
     image,
     createAt,
     introduction,
-    tags,
+    tag,
     user,
 }: BlogSummary) {
     const introductionCustom =
-        introduction.join(" ").split(" ").slice(0, 100).join(" ") + "[...]";
+        introduction
+            .map((introduction) => {
+                return introduction.content;
+            })
+            .join(" ")
+            .split(" ")
+            .slice(0, 60)
+            .join(" ") + " [...]";
     const formattedDate = format(createAt, "PP", { locale: vi });
     return (
         <div className="w-full h-auto border-b border-second-color my-8 ">
@@ -30,7 +37,8 @@ export default function Blog({
                 </span>{" "}
                 {/* | trong{" "} */}
                 {/* <span className="font-normal text-fifth-color">{category}</span>{" "} */}
-                bởi <span className="font-semibold text-fifth-color">{user}</span>
+                bởi{" "}
+                <span className="font-semibold text-fifth-color">{user}</span>
             </p>
             <Image
                 className="object-cover w-full my-4 rounded-md"
@@ -44,7 +52,14 @@ export default function Blog({
                 {introductionCustom}
             </p>
             <p className="text-sm mt-4 text-fifth-color italic">
-                Tags: <span className="font-normal">{tags.join(", ")}</span>
+                Tags:{" "}
+                <span className="font-normal">
+                    {tag
+                        .map((tag) => {
+                            return tag.name;
+                        })
+                        .join(", ")}
+                </span>
             </p>
             <ViewMoreButton link={link} />
         </div>

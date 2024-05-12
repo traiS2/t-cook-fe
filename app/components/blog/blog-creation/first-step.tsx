@@ -105,7 +105,7 @@ export default function FirstStep() {
         if (!userChoice) return;
         const newIngredients = [...blog.ingredient];
         newIngredients.splice(index, 1);
-        setBlog({ ...blog, ingredients: newIngredients });
+        setBlog({ ...blog, ingredient: newIngredients });
     };
 
     const handleOnChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {

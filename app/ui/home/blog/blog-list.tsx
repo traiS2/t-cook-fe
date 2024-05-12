@@ -25,9 +25,9 @@ export default function BlogList() {
 
     return (
         <div className="w-full h-auto mt-4">
-            {/* {blogs?.map((blog) => (
+            {blogs?.map((blog) => (
                 <Blog key={blog.id} {...blog} />
-            ))} */}
+            ))}
         </div>
     );
 }

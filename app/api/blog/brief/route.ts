@@ -1,13 +1,13 @@
 export async function GET() {
   try {
     const res = await fetch(
-      process.env.DATA_API_KEY_BE + "/api/blog/get-blog-brief",
+      process.env.DATA_API_KEY_BE + "/api/blog/get-brief-blog",
       {
         next: { revalidate: 36000 },
       }
     );
     if (res.ok) {
-      const blogs = await res.json();
+      const blogs : BlogBrief[] = await res.json();
       return Response.json(blogs);
     } else {
       return Response.json(

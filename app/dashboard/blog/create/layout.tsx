@@ -19,14 +19,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ingredient: [],
         recipe: [
             {
-                id: 0,
                 name: "",
                 detailRecipe: [""],
                 image: {
                     image: "",
                     url: "",
                     file: "",
-                },
+                },      
             },
         ],
         tag: [],

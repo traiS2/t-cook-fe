@@ -26,7 +26,23 @@ interface BlogSummary {
     link: string;
     image: string;
     createAt: Date;
-    introduction: string[];
-    tags: string[];
+    introduction: Introduction[];
+    tag: Tag[];
+    user: string;
+}
+
+interface DetailBlog {
+    id: number;
+    name: string;
+    link: string;
+    image: string;
+    createAt: any;
+    introduction: Introduction[];
+    levelOfDifficulty: number;
+    cookingTime: number;
+    servingSize: number;
+    ingredient: Ingredient[];
+    recipe: Recipe[];
+    // tag: Tag[];
     user: string;
 }
