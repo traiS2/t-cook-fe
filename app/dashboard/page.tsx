@@ -1,7 +1,9 @@
 "use client";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
+    const { data: session } = useSession();
     useEffect(() => {
         getBlogs();
     }, []);
@@ -10,5 +12,11 @@ export default function Page() {
         await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
-    return <p>Dashboard Page</p>;
+    return (
+        <p>
+            {session?.user.role}
+            {session?.user.accessToken}
+            hi
+        </p>
+    );
 }

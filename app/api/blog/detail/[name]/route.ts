@@ -4,7 +4,6 @@ export async function GET(request: NextRequest) {
     try {
         const path = request.nextUrl.pathname.split("/");
         const name = path[path.length - 1];
-        console.log(name);
         const response = await fetch(
             process.env.DATA_API_KEY_BE + "/api/blog/get-detail-blog/" + name,
             {

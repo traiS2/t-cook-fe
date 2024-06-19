@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  // previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -13,17 +14,178 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userID            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountID String  @map("provider_account_id")
+  refreshToken      String? @map("refesher_token") @db.Text
+  accessToken       String? @map("access_token") @db.Text
+  expiresAt         Int?    @map("expires_at")
+  tokenType         String? @map("token_type")
+  scope             String?
+  idToken           String? @map("id_token") @db.Text
 
-model User {
-  id Int @id @default(autoincrement())
-  first_name String
-  last_name String
-  statusID Int
-  status Status @relation(fields: [statusID], references: [id])
+  user User @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountID])
+  @@map("account")
 }
 
-model Status {
-  id Int @id @default(autoincrement())
-  name String @unique
-  user User[]
+model User {
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  image    String?
+  role     Role      @default(user)
+  accounts Account[]
+  Blog     Blog[]
+
+  @@map("user")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_token")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum Status {
+  active
+  inactive
+  suspended
+  pending
+  banned
+  closed
+}
+
+model Blog {
+  id                 Int            @id @default(autoincrement())
+  link               String         @unique
+  name               String
+  image              String
+  level_of_difficult Int
+  cooking_time       Int
+  serving_size       Int
+  create_at          DateTime
+  update_at          DateTime?
+  userID             String
+  statusID           Int
+  user               User           @relation(fields: [userID], references: [id])
+  status             Status         @default(pending)
+  introduction       Introduction[]
+  ingredient         Ingredient[]
+  recipe             Recipe[]
+  blogTag            BlogTag[]
+  blogCategory       BlogCategory[]
+
+  @@map("blog")
+}
+
+model Ingredient {
+  id     Int
+  blogID Int  @map("blog_id")
+  blog   Blog @relation(fields: [blogID], references: [id])
+
+  @@id([id, blogID])
+  @@map("ingredient")
+}
+
+model Recipe {
+  id           Int
+  blogID       Int           @map("blog_id")
+  blog         Blog          @relation(fields: [blogID], references: [id])
+  recipeImage  RecipeImage?
+  detailRecipe DetailRecipe?
+
+  @@id([id, blogID])
+  @@map("recipe")
+}
+
+model DetailRecipe {
+  id       Int
+  content  String @db.Text
+  recipeID Int    @map("recipe_id")
+  blogID   Int
+  reicpe   Recipe @relation(fields: [recipeID, blogID], references: [id, blogID])
+
+  @@id([id, recipeID, blogID])
+  @@unique([recipeID, blogID])
+  @@map("detail_recipe")
+}
+
+model RecipeImage {
+  id       Int
+  url      String @db.Text
+  recipeID Int    @map("recipe_id")
+  blogID   Int    @map("blog_id")
+  recipe   Recipe @relation(fields: [recipeID, blogID], references: [id, blogID])
+
+  @@id([id, recipeID, blogID])
+  @@unique([recipeID, blogID])
+  @@map("recipe_image")
+}
+
+model Tag {
+  id      Int       @id @default(autoincrement())
+  name    String
+  blogTag BlogTag[]
+
+  @@map("tag")
+}
+
+model BlogTag {
+  tagID  Int  @map("tag_id")
+  blogID Int  @map("blog_id")
+  tag    Tag  @relation(fields: [tagID], references: [id])
+  blog   Blog @relation(fields: [blogID], references: [id])
+
+  @@id([tagID, blogID])
+  @@map("blog_tag")
+}
+
+model Introduction {
+  id      Int
+  content String @db.Text
+  blogID  Int    @map("blog_id")
+  blog    Blog   @relation(fields: [blogID], references: [id])
+
+  @@id([id, blogID])
+  @@map("introduction")
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  blogCategory BlogCategory[]
+
+  @@map("category")
+}
+
+model BlogCategory {
+  categoryID Int      @map("category_id")
+  blogID     Int      @map("blog_id")
+  category   Category @relation(fields: [categoryID], references: [id])
+  blog       Blog     @relation(fields: [blogID], references: [id])
+
+  @@id([categoryID, blogID])
+  @@map("blog_category")
+}
+
+model PrimaryCategory {
+  id       Int    @id
+  name     String
+  statusID Int    @map("status_id")
+  status   Status @default(pending)
+
+  @@map("primary_category")
 }

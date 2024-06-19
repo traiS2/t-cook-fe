@@ -14,12 +14,15 @@ async function main() {
         ],
     });
 
-    console.log({ status });
+    const roles = await prisma.role.createMany({
+        data: [{ name: "admin" }, { name: "mod" }, { name: "user" }],
+    });
+
+    console.log({ status, roles });
 }
 
 main()
     .catch((e) => {
-        console.error(e);
         process.exit(1);
     })
     .finally(async () => {

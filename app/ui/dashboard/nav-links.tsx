@@ -15,6 +15,8 @@ export default function NavLinks() {
             icon: Book,
         },
         { name: "Category", href: "/dashboard/category", icon: Bookmark },
+        { name: "Admin", href: "/dashboard/admin", icon: Bookmark },
+        { name: "Moderator", href: "/dashboard/moderator", icon: Bookmark },
     ];
     return (
         <>
