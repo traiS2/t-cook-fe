@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { ta, vi } from "date-fns/locale";
 export default function Blog({
     id,
-    name,
+    title,
     link,
     image,
     createAt,
@@ -27,7 +27,7 @@ export default function Blog({
         <div className="w-full h-auto border-b border-second-color my-8 ">
             <Link href={`/blog/${link}`}>
                 <h1 className="text-2xl font-semibold uppercase text-fifth-color">
-                    {name}
+                    {title}
                 </h1>
             </Link>
             <p className="text-xs font-bold text-second-color">
@@ -38,15 +38,16 @@ export default function Blog({
                 {/* | trong{" "} */}
                 {/* <span className="font-normal text-fifth-color">{category}</span>{" "} */}
                 bởi{" "}
-                <span className="font-semibold text-fifth-color">{user}</span>
+                <span className="font-semibold text-fifth-color">
+                    {user.name}
+                </span>
             </p>
             <Image
-                className="object-cover w-full my-4 rounded-md"
+                className="object-cover w-full my-4 rounded-xl"
                 alt="image food"
                 height={100}
                 width={600}
                 src={image}
-                objectFit="cover"
             />
             <p className=" text-justify text-fourth-color">
                 {introductionCustom}

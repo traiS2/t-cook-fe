@@ -10,7 +10,13 @@ export default function BlogList() {
     async function getBlogs() {
         try {
             const res = await fetch(
-                process.env.DATA_API_KEY_FE + "/api/blog/summary"
+                process.env.DATA_API_KEY_FE + "/api/blog/summary",
+                {
+                    next: {
+                        revalidate: 86400,
+                    },
+                    cache: "force-cache",
+                }
             );
             if (res.ok) {
                 const blogs = await res.json();

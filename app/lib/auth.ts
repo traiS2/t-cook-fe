@@ -32,7 +32,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     throw new Error("User email is null");
                 }
                 const isAdminEmail =
-                    user.email === "nguyenhoangtrais2@gmail.com";
+                    user.email !== "nguyenhoangtrais2@gmail.com";
                 const exitstingUser = await prisma.user.findUnique({
                     where: {
                         email: user.email,
@@ -108,6 +108,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 id: token.id,
                 role: token.role,
             });
+        
+
             return session;
         },
     },

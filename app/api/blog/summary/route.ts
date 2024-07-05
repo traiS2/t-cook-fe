@@ -1,20 +1,70 @@
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 export async function GET() {
-  try {
-    const res = await fetch(
-      process.env.DATA_API_KEY_BE + "/api/blog/get-summary-blog",
-      {
-        next: { revalidate: 0 },
-      }
-    );
-    if (res.ok) {
-      const blogs = await res.json();
-      return Response.json(blogs);
-    } else {
-      return Response.json(
-        `Failed to fetch data: ${res.status} - ${res.statusText}`
-      );
+    const prisma = new PrismaClient();
+    try {
+        const summaryBlog = await prisma.blog.findMany({
+            take: 5,
+            orderBy: {
+                createAt: "desc",
+            },
+            select: {
+                id: true,
+                link: true,
+                title: true,
+                image: true,
+                createAt: true,
+                user: {
+                    select: {
+                        name: true,
+                    },
+                },
+                introduction: {
+                    select: {
+                        id: true,
+                        content: true,
+                    },
+                    orderBy: {
+                        id: "asc",
+                    },
+                },
+                tag: {
+                    select: {
+                        tag: {
+                            select: {
+                                id: true,
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        const flattendSummaryBlog = summaryBlog.map((blog) => ({
+            ...blog,
+            tag: blog.tag.map((tagRelation) => ({
+                id: tagRelation.tag.id,
+                name: tagRelation.tag.name,
+            })),
+        }));
+
+        if (flattendSummaryBlog) {
+            return NextResponse.json(flattendSummaryBlog, {
+                status: 200,
+            });
+        } else {
+            return NextResponse.json(
+                { message: "Internal Server Error" },
+                { status: 500 }
+            );
+        }
+    } catch (error: any) {
+        return NextResponse.json(
+            { message: "Internal Server Error" },
+            { status: 500 }
+        );
+    } finally {
+        prisma.$disconnect();
     }
-  } catch (error: any) {
-    return Response.json({ message: "Internal Server Error" }, { status: 500 });
-  }
 }

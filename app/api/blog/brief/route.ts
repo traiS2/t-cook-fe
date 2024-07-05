@@ -1,20 +1,37 @@
+import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
 export async function GET() {
-  try {
-    const res = await fetch(
-      process.env.DATA_API_KEY_BE + "/api/blog/get-brief-blog",
-      {
-        next: { revalidate: 36000 },
-      }
-    );
-    if (res.ok) {
-      const blogs : BlogBrief[] = await res.json();
-      return Response.json(blogs);
-    } else {
-      return Response.json(
-        `Failed to fetch data: ${res.status} - ${res.statusText}`
-      );
+    const prisma = new PrismaClient();
+    try {
+        const briefBlog = await prisma.blog.findMany({
+            take: 3,
+            orderBy: {
+                createAt: "desc",
+            },
+            select: {
+                id: true,
+                title: true,
+                link: true,
+                image: true,
+            },
+            where: {
+                status: "active",
+            },
+        });
+        if (briefBlog) {
+            return NextResponse.json(briefBlog, { status: 200 });
+        } else {
+            return NextResponse.json(
+                { message: "Internal Server Error" },
+                { status: 500 }
+            );
+        }
+    } catch (error: any) {
+        return NextResponse.json(
+            { message: "Internal Server Error" },
+            { status: 500 }
+        );
+    } finally {
+        prisma.$disconnect();
     }
-  } catch (error: any) {
-    return Response.json({ message: "Internal Server Error" }, { status: 500 });
-  }
 }

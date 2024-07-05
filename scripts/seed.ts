@@ -3,22 +3,26 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
-    const status = await prisma.status.createMany({
-        data: [
-            { name: "active" },
-            { name: "inactive" },
-            { name: "suspended" },
-            { name: "pending" },
-            { name: "banned" },
-            { name: "closed" },
-        ],
-    });
+    const category = await prisma.category.findMany();
+    if (category.length === 0) {
+        const resultCategory = await prisma.category.createMany({
+            data: [
+                { name: "Món ăn Nam Bộ" },
+                { name: "Món ăn Bắc Bộ" },
+                { name: "Món ăn Trung Bộ" },
+                { name: "Món ăn Tây Nam Bộ" },
+            ],
+        });
+        console.log(resultCategory);
+    }
 
-    const roles = await prisma.role.createMany({
-        data: [{ name: "admin" }, { name: "mod" }, { name: "user" }],
-    });
-
-    console.log({ status, roles });
+    const tag = await prisma.tag.findMany();
+    if (tag.length === 0) {
+        const resultTag = await prisma.tag.createMany({
+            data: [{ name: "gà" }, { name: "chè" }, { name: "cơm" }],
+        });
+        console.log(resultTag);
+    }
 }
 
 main()

@@ -22,7 +22,6 @@
     "react-select": "^5.8.0"
   },
   "devDependencies": {
-    "@auth/prisma-adapter": "^2.2.0",
     "@prisma/client": "^5.15.0",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -34,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "firebase": "^10.9.0",
+    "jsonwebtoken": "^9.0.2",
     "next-auth": "^5.0.0-beta.19",
     "postcss": "^8",
     "prisma": "^5.15.0",

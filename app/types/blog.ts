@@ -16,19 +16,19 @@ interface BlogCreationState {
 interface BlogBrief {
     id: number;
     link: string;
-    name: string;
+    title: string;
     image: string;
 }
 
 interface BlogSummary {
     id: number;
-    name: string;
+    title: string;
     link: string;
     image: string;
     createAt: Date;
     introduction: Introduction[];
     tag: Tag[];
-    user: string;
+    user: User;
 }
 
 interface DetailBlog {
@@ -38,11 +38,15 @@ interface DetailBlog {
     image: string;
     createAt: any;
     introduction: Introduction[];
-    levelOfDifficulty: number;
+    levelOfDifficult: number;
     cookingTime: number;
     servingSize: number;
     ingredient: Ingredient[];
     recipe: Recipe[];
     // tag: Tag[];
-    user: string;
+    user: User;
+}
+
+interface User {
+    name: string;
 }

@@ -55,7 +55,6 @@ export default function SecondStep() {
         setBlog({ ...blog, recipe: newRecipes });
     };
 
-
     const handleClickMunisDetailsRecipe = (
         recipePostion: number,
         detailsRecipePotion: number
@@ -65,7 +64,7 @@ export default function SecondStep() {
         if (!userChoice) return;
         const newRecipes = [...blog.recipe];
         newRecipes[recipePostion].detailRecipe.splice(detailsRecipePotion, 1);
-        setBlog({ ...blog, recipes: newRecipes });
+        setBlog({ ...blog, recipe: newRecipes });
     };
 
     const handleOnChangeNameRecipe = (
@@ -74,7 +73,7 @@ export default function SecondStep() {
     ) => {
         const newNameRecipe = blog.recipe;
         newNameRecipe[index].name = e.target.value;
-        setBlog({ ...blog, recipes: newNameRecipe });
+        setBlog({ ...blog, recipe: newNameRecipe });
     };
 
     const handleOnChangeDetailsRecipe = (
@@ -85,7 +84,7 @@ export default function SecondStep() {
         const newDetailsRecipe = [...blog.recipe];
         newDetailsRecipe[indexNameRecipe].detailRecipe[indexDetailsRecipe] =
             e.target.value;
-        setBlog({ ...blog, recipes: newDetailsRecipe });
+        setBlog({ ...blog, recipe: newDetailsRecipe });
     };
 
     const handleOnChangeImageRecipe = (e: any, index: number) => {
@@ -94,7 +93,7 @@ export default function SecondStep() {
         const newRicepe = blog.recipe;
         newRicepe[index].image.image = url;
         newRicepe[index].image.file = file;
-        setBlog({ ...blog, recipes: newRicepe });
+        setBlog({ ...blog, recipe: newRicepe });
     };
 
     return (
@@ -111,7 +110,7 @@ export default function SecondStep() {
                                 type="text"
                                 placeholder="Tên bước"
                                 value={recipe.name}
-                                className="ml-2 outline-none pl-2 rounded-md "
+                                className="ml-2 outline-none pl-2 rounded-md"
                                 onChange={(e) =>
                                     handleOnChangeNameRecipe(e, indexR)
                                 }

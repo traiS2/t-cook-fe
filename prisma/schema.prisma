@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
   // previewFeatures = ["driverAdapters"]
 }
 
@@ -69,32 +69,32 @@ enum Status {
 }
 
 model Blog {
-  id                 Int            @id @default(autoincrement())
-  link               String         @unique
-  name               String
-  image              String
-  level_of_difficult Int
-  cooking_time       Int
-  serving_size       Int
-  create_at          DateTime
-  update_at          DateTime?
-  userID             String
-  statusID           Int
-  user               User           @relation(fields: [userID], references: [id])
-  status             Status         @default(pending)
-  introduction       Introduction[]
-  ingredient         Ingredient[]
-  recipe             Recipe[]
-  blogTag            BlogTag[]
-  blogCategory       BlogCategory[]
+  id               Int            @id @default(autoincrement())
+  link             String         @unique
+  title            String         @db.Text
+  image            String
+  levelOfDifficult Int            @map("level_of_difficult")
+  cookingTime      Int            @map("cooking_time")
+  servingSize      String         @map("serving_size")
+  createAt         DateTime       @map("create_at")
+  updateAt         DateTime?      @map("update_at")
+  userID           String         @map("user_id")
+  user             User           @relation(fields: [userID], references: [id])
+  status           Status         @default(pending)
+  introduction     Introduction[]
+  ingredient       Ingredient[]
+  recipe           Recipe[]
+  tag              BlogTag[]
+  category         BlogCategory[]
 
   @@map("blog")
 }
 
 model Ingredient {
   id     Int
-  blogID Int  @map("blog_id")
-  blog   Blog @relation(fields: [blogID], references: [id])
+  name   String @db.Text
+  blogID Int    @map("blog_id")
+  blog   Blog   @relation(fields: [blogID], references: [id])
 
   @@id([id, blogID])
   @@map("ingredient")
@@ -102,13 +102,26 @@ model Ingredient {
 
 model Recipe {
   id           Int
-  blogID       Int           @map("blog_id")
-  blog         Blog          @relation(fields: [blogID], references: [id])
-  recipeImage  RecipeImage?
-  detailRecipe DetailRecipe?
+  title        String
+  blogID       Int            @map("blog_id")
+  blog         Blog           @relation(fields: [blogID], references: [id])
+  imageRecipe  ImageRecipe?
+  detailRecipe DetailRecipe[]
 
   @@id([id, blogID])
   @@map("recipe")
+}
+
+model ImageRecipe {
+  id       String @default(cuid())
+  url      String @db.Text
+  recipeID Int    @map("recipe_id")
+  blogID   Int    @map("blog_id")
+  recipe   Recipe @relation(fields: [recipeID, blogID], references: [id, blogID])
+
+  @@id([id, recipeID, blogID])
+  @@unique([recipeID, blogID])
+  @@map("image_recipe")
 }
 
 model DetailRecipe {
@@ -119,27 +132,15 @@ model DetailRecipe {
   reicpe   Recipe @relation(fields: [recipeID, blogID], references: [id, blogID])
 
   @@id([id, recipeID, blogID])
-  @@unique([recipeID, blogID])
   @@map("detail_recipe")
 }
 
-model RecipeImage {
-  id       Int
-  url      String @db.Text
-  recipeID Int    @map("recipe_id")
-  blogID   Int    @map("blog_id")
-  recipe   Recipe @relation(fields: [recipeID, blogID], references: [id, blogID])
-
-  @@id([id, recipeID, blogID])
-  @@unique([recipeID, blogID])
-  @@map("recipe_image")
-}
-
 model Tag {
-  id      Int       @id @default(autoincrement())
-  name    String
-  blogTag BlogTag[]
+  id   Int       @id @default(autoincrement())
+  name String
+  blog BlogTag[]
 
+  @@unique([id])
   @@map("tag")
 }
 
@@ -164,9 +165,9 @@ model Introduction {
 }
 
 model Category {
-  id           Int            @id @default(autoincrement())
-  name         String
-  blogCategory BlogCategory[]
+  id       Int            @id @default(autoincrement())
+  name     String
+  category BlogCategory[]
 
   @@map("category")
 }

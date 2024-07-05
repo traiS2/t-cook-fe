@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Alarm,
     Person,
@@ -9,7 +9,7 @@ import {
     Dash,
     StarFill,
 } from "react-bootstrap-icons";
-import { format, isValid, parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { vi } from "date-fns/locale";
 
 export default function Page({ params }: { params: { name: string } }) {
@@ -20,7 +20,13 @@ export default function Page({ params }: { params: { name: string } }) {
     async function getDetailBlog() {
         try {
             const response = await fetch(
-                process.env.DATA_API_KEY_FE + "/api/blog/detail/" + params.name
+                process.env.DATA_API_KEY_FE + "/api/blog/detail/" + params.name,
+                {
+                    cache: "force-cache",
+                    next: {
+                        revalidate: 8640,
+                    },
+                }
             );
             if (response.ok) {
                 const blog = await response.json();
@@ -28,6 +34,7 @@ export default function Page({ params }: { params: { name: string } }) {
                     locale: vi,
                 });
                 blog.createAt = formatedDate;
+                console.log(detailBlog);
                 setDetailBlog(blog);
             } else {
                 alert("Failed to fetch data at blog detail");
@@ -36,7 +43,7 @@ export default function Page({ params }: { params: { name: string } }) {
             alert("Failed to error fetch data at blog detail" + error);
         }
     }
-
+    console.log(detailBlog);
     useEffect(() => {
         getDetailBlog();
     }, []);
@@ -91,7 +98,6 @@ export default function Page({ params }: { params: { name: string } }) {
                     alt={detailBlog.name}
                     width={610}
                     height={300}
-                    objectFit="cover"
                 />
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
                     {detailBlog.name}
@@ -107,7 +113,7 @@ export default function Page({ params }: { params: { name: string } }) {
                     </span>{" "}
                     bởi{" "}
                     <span className="font-medium text-fifth-color">
-                        {detailBlog.user}
+                        {detailBlog?.user?.name}
                     </span>
                 </p>
             </div>
@@ -145,7 +151,7 @@ export default function Page({ params }: { params: { name: string } }) {
                                 <StarFill
                                     key={i}
                                     className={`w-4 h-4 ${
-                                        i <= detailBlog.levelOfDifficulty
+                                        i <= detailBlog.levelOfDifficult
                                             ? "text-yellow-500"
                                             : "text-second-color"
                                     }`}
@@ -231,7 +237,7 @@ export default function Page({ params }: { params: { name: string } }) {
                                 className={`w-full font-medium h-auto text-fourth-color text-justify py-2 ${textSize[textSizeIndex]}`}
                             >
                                 <span className="mr-2">{recipe.id + 1}.</span>
-                                {recipe.name}
+                                {recipe.title}
                             </p>
                             {recipe.detailRecipe &&
                                 recipe.detailRecipe
@@ -245,14 +251,13 @@ export default function Page({ params }: { params: { name: string } }) {
                                             {detail.content}
                                         </p>
                                     ))}
-                            {recipe.image && (
+                            {recipe.imageRecipe && (
                                 <Image
-                                    src={recipe.image}
+                                    src={recipe.imageRecipe.url}
                                     className="w-full pt-1 pb-2"
                                     alt={detailBlog.name + recipe}
                                     width={600}
                                     height={300}
-                                    objectFit="cover"
                                 />
                             )}
                         </div>

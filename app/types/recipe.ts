@@ -6,7 +6,12 @@ interface RecipeBlogCreationState {
 
 interface Recipe {
     id: number;
-    name: string;
+    title: string;
     detailRecipe: DetailRecipe[];
-    image: string;
+    imageRecipe: ImageRecipe;
+}
+
+interface ImageRecipe {
+    id: string;
+    url: string;
 }

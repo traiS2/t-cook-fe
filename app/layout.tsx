@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import React from "react";
 
 export const metadata: Metadata = {
     title: "T-Cooking",
@@ -14,9 +15,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body style={{ fontFamily: "Segoe UI, Arial, sans-serif" }}>
-                <SessionProvider>{children}</SessionProvider>
-            </body>
+            <React.StrictMode>
+                <body style={{ fontFamily: "Segoe UI, Arial, sans-serif" }}>
+                    <SessionProvider>{children}</SessionProvider>
+                </body>
+            </React.StrictMode>
         </html>
     );
 }

@@ -32,6 +32,8 @@ interface SelectTag {
 
 export default function ThirdStep() {
     const { blog, setBlog } = useCreateBlogContext();
+    const [categoryAPI, setCategoryAPI] = useState<Category[]>();
+    const [tagAPI, setTagAPI] = useState<Tag[]>();
 
     const [selectCategories, setSelectCategories] = useState<SelectCategory[]>(
         []
@@ -220,21 +222,31 @@ export default function ThirdStep() {
 
         await Promise.all(promises);
     };
-
+    console.log(blog);
     async function getCategories() {
         try {
             const categoriesJson = await fetch(
-                process.env.DATA_API_KEY_FE + "/api/category"
+                process.env.DATA_API_KEY_FE + "/api/category",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
             );
+
             const categoriesData: Category[] = await categoriesJson.json();
+            setCategoryAPI(categoriesData);
+
             const newCategoriesData: SelectCategory[] = categoriesData.map(
                 (category) => ({
                     value: category.id,
                     label: category.name,
                 })
             );
+
             setSelectCategories(newCategoriesData);
         } catch (error) {
+            console.log(error);
             return NextResponse.json(
                 { message: "Internal NextJS Error" },
                 { status: 500 }
@@ -248,6 +260,7 @@ export default function ThirdStep() {
                 process.env.DATA_API_KEY_FE + "/api/tag"
             );
             const tagsData: Tag[] = await tagsJson.json();
+            setTagAPI(tagAPI);
             const newTagsData: SelectTag[] = tagsData.map((tag) => ({
                 value: tag.id,
                 label: tag.name,
