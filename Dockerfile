@@ -14,10 +14,11 @@ RUN npm install
 # Copy toàn bộ code vào thư mục làm việc
 COPY . .
 
-RUN npx prisma generate
 
 # Build ứng dụng Next.js
 RUN npm run build
+
+RUN npx prisma generate
 
 # Port mà ứng dụng sẽ lắng nghe trên
 EXPOSE 3000

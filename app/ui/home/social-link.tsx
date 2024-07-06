@@ -1,4 +1,3 @@
-import { link } from "fs";
 import { Facebook, Youtube, Instagram } from "react-bootstrap-icons";
 export default function SocialLink() {
     const links = [

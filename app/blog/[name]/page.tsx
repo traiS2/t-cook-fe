@@ -80,16 +80,16 @@ export default function Page({ params }: { params: { name: string } }) {
 
     return (
         <div className="min-h-[100vh]">
-            <div className="flex w-full py-4 border-b border-second-color">
+            {/* <div className="flex w-full py-4 border-b border-second-color">
                 <h1 className="w-full flex gap-2 italic text-base text-fifth-color font-normal">
                     Trang chủ <span className="text-sm">{` >> `}</span> Blog{" "}
                     <span className="text-sm">{` >> `}</span> {detailBlog.name}
                 </h1>
-            </div>
+            </div> */}
             <div className="flex flex-col w-full h-auto items-center justify-start border-b border-second-color pb-4    ">
                 <Image
                     src={detailBlog.image}
-                    className="w-full pt-8"
+                    className="w-full pt-4"
                     alt={detailBlog.name}
                     width={610}
                     height={300}

@@ -6,7 +6,7 @@ export default function Header() {
     const handleSearchClick = () => {};
     return (
         <div className="flex items-center justify-center bg-primary-color">
-            <div className="flex h-9 mx-auto w-3/5 justify-between items-center">
+            <div className="flex h-9 mx-auto w-full justify-between items-center px-2 xl:w-3/5">
                 <div className="flex gap-2 text-second-color">
                     <SocialLink />
                 </div>
