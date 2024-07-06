@@ -1,15 +1,25 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "next.config.js",
-            "use": "@vercel/next"
-        }
+      {
+        "src": "package.json",
+        "use": "@vercel/next"
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/$1"
-        }
-    ]
-}
+      {
+        "src": "/(.*)",
+        "dest": "/$1"
+      }
+    ],
+    "env": {
+      "DATABASE_URL": "@database_url",
+      "NEXT_PUBLIC_API_URL": "@next_public_api_url"
+    },
+    "build": {
+      "env": {
+        "DATABASE_URL": "@database_url"
+      }
+    }
+  }
+  
