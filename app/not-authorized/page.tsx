@@ -10,8 +10,10 @@ export default function Page() {
     };
 
     return (
-        <div className="w-full h-[100vh] flex flex-col gap-2 justify-center items-center font-extrabold text-lg">
-            You can't access this page
+        <div className="w-full h-[100vh] ">
+            <p className="flex flex-col gap-2 justify-center items-center font-extrabold text-lg">
+                You can&apos;t access this page
+            </p>
             <div className="flex flex-row gap-2">
                 <div>
                     <Button label="Logout" onClick={handleOnClickLogout} />

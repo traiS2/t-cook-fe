@@ -8,6 +8,9 @@ export async function GET() {
             orderBy: {
                 createAt: "desc",
             },
+            where: {
+                status: "active",
+            },
             select: {
                 id: true,
                 link: true,

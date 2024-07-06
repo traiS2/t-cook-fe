@@ -3,10 +3,6 @@ import Blog from "./blog";
 export default function BlogList() {
     const [blogs, setBlogs] = useState<BlogSummary[]>([]);
 
-    useEffect(() => {
-        getBlogs();
-    }, []);
-
     async function getBlogs() {
         try {
             const res = await fetch(
@@ -28,6 +24,10 @@ export default function BlogList() {
             alert("Failed to fetch data at blog list");
         }
     }
+
+    useEffect(() => {
+        getBlogs();
+    }, []);
 
     return (
         <div className="w-full h-auto mt-4">

@@ -1,6 +1,6 @@
 "use client";
 import Select from "react-select";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NextResponse } from "next/server";
 import ReactSelectCreatable from "react-select/creatable";
 import { useCreateBlogContext } from "@/app/hook/create-blog-context/create-blog-context";
@@ -32,8 +32,6 @@ interface SelectTag {
 
 export default function ThirdStep() {
     const { blog, setBlog } = useCreateBlogContext();
-    const [categoryAPI, setCategoryAPI] = useState<Category[]>();
-    const [tagAPI, setTagAPI] = useState<Tag[]>();
 
     const [selectCategories, setSelectCategories] = useState<SelectCategory[]>(
         []
@@ -222,8 +220,8 @@ export default function ThirdStep() {
 
         await Promise.all(promises);
     };
-    console.log(blog);
-    async function getCategories() {
+
+    const getCategories = useCallback(async () => {
         try {
             const categoriesJson = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/category",
@@ -235,7 +233,6 @@ export default function ThirdStep() {
             );
 
             const categoriesData: Category[] = await categoriesJson.json();
-            setCategoryAPI(categoriesData);
 
             const newCategoriesData: SelectCategory[] = categoriesData.map(
                 (category) => ({
@@ -252,15 +249,14 @@ export default function ThirdStep() {
                 { status: 500 }
             );
         }
-    }
+    }, []);
 
-    async function getTags() {
+    const getTags = useCallback(async () => {
         try {
             const tagsJson = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/tag"
             );
             const tagsData: Tag[] = await tagsJson.json();
-            setTagAPI(tagAPI);
             const newTagsData: SelectTag[] = tagsData.map((tag) => ({
                 value: tag.id,
                 label: tag.name,
@@ -272,7 +268,7 @@ export default function ThirdStep() {
                 { status: 500 }
             );
         }
-    }
+    }, []);
 
     useEffect(() => {
         getCategories();

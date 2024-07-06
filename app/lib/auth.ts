@@ -14,6 +14,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 return `${baseUrl}/dashboard`;
             }
         },
+        
         async signIn({ user, account }) {
             try {
                 if (

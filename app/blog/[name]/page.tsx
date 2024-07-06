@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
     Alarm,
     Person,
@@ -17,10 +17,10 @@ export default function Page({ params }: { params: { name: string } }) {
 
     const [detailBlog, setDetailBlog] = useState<DetailBlog>({} as DetailBlog);
 
-    async function getDetailBlog() {
+    const getDetailBlog = useCallback(async () => {
         try {
             const response = await fetch(
-                process.env.DATA_API_KEY_FE + "/api/blog/detail/" + params.name,
+                `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
                 {
                     cache: "force-cache",
                     next: {
@@ -30,29 +30,24 @@ export default function Page({ params }: { params: { name: string } }) {
             );
             if (response.ok) {
                 const blog = await response.json();
-                const formatedDate = format(parseISO(blog.createAt), "PP", {
+                const formattedDate = format(parseISO(blog.createAt), "PP", {
                     locale: vi,
                 });
-                blog.createAt = formatedDate;
-                console.log(detailBlog);
+                blog.createAt = formattedDate;
                 setDetailBlog(blog);
             } else {
                 alert("Failed to fetch data at blog detail");
             }
         } catch (error: any) {
-            alert("Failed to error fetch data at blog detail" + error);
+            alert(
+                "Failed to error fetch data at blog detail: " + error.message
+            );
         }
-    }
-    console.log(detailBlog);
+    }, [params.name]);
+
     useEffect(() => {
         getDetailBlog();
-    }, []);
-
-    getBlog();
-
-    async function getBlog() {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-    }
+    });
 
     type TextSizeType = {
         [key: number]: string;
