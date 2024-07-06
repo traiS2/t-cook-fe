@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": " next build && ts-node",
+    "build": "prisma generate && next build && ts-node",
     "start": "next start",
     "lint": "next lint",
     "migrate": "prisma migrate deploy",
@@ -22,7 +22,7 @@
     "react-select": "^5.8.0"
   },
   "devDependencies": {
-    "@prisma/client": "^5.16.1",
+    "@prisma/client": "^5.15.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
