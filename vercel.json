@@ -6,24 +6,7 @@
         "use": "@vercel/next"
       }
     ],
-    "env": {
-      "POSTGRES_URL": "@postgres_url",
-      "POSTGRES_PRISMA_URL": "@postgres_prisma_url",
-      "POSTGRES_URL_NO_SSL": "@postgres_url_no_ssl",
-      "POSTGRES_URL_NON_POOLING": "@postgres_url_non_pooling",
-      "POSTGRES_USER": "@postgres_user",
-      "POSTGRES_HOST": "@postgres_host",
-      "POSTGRES_PASSWORD": "@postgres_password",
-      "POSTGRES_DATABASE": "@postgres_database",
-      "AUTH_SECRET": "/INrTSI9dU20INLThlQCXQSGXFOLHU3uPTuqAtYPNq0=",
-      "AUTH_GOOGLE_ID": "526931700508-sq972mu07qvq2svl2vjo0r725e7jatvj.apps.googleusercontent.com", 
-      "AUTH_GOOGLE_SECRET": "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"
-    },
-    "build": {
-      "env": {
-        "DATABASE_URL": "@postgres_prisma_url"
-      }
-    },
+    
     "routes": [
       {
         "src": "/(.*)",
