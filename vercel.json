@@ -8,7 +8,7 @@
     ],
     "build": {
         "env": {
-            "DATABASE_URL": "@postgres_prisma_url"
+            "DATABASE_URL": "postgres://default:w3Pcg5HTqiLV@ep-nameless-forest-21792820-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
         }
     },
     "routes": [
