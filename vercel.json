@@ -1,37 +1,20 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/next"
-      }
+        {
+            "src": "package.json",
+            "use": "@vercel/next"
+        }
     ],
-    "env": {
-      "DATA_API_KEY_BE": "@data_api_key_be",
-      "DATA_API_KEY_FE": "@data_api_key_fe",
-      "POSTGRES_URL": "@postgres_url",
-      "POSTGRES_PRISMA_URL": "@postgres_prisma_url",
-      "POSTGRES_URL_NO_SSL": "@postgres_url_no_ssl",
-      "POSTGRES_URL_NON_POOLING": "@postgres_url_non_pooling",
-      "POSTGRES_USER": "@postgres_user",
-      "POSTGRES_HOST": "@postgres_host",
-      "POSTGRES_PASSWORD": "@postgres_password",
-      "POSTGRES_DATABASE": "@postgres_database",
-      "NEXTAUTH_URL": "@nextauth_url",
-      "AUTH_SECRET": "@auth_secret",
-      "AUTH_GOOGLE_ID": "@auth_google_id",
-      "AUTH_GOOGLE_SECRET": "@auth_google_secret"
-    },
     "build": {
-      "env": {
-        "DATABASE_URL": "@postgres_prisma_url"
-      }
+        "env": {
+            "DATABASE_URL": "@postgres_prisma_url"
+        }
     },
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/$1"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "/$1"
+        }
     ]
-  }
-  
+}
