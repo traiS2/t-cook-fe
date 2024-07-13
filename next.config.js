@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
+    reactStrictMode: false,
     async redirects() {
         return [
             {
@@ -10,11 +11,19 @@ const nextConfig = {
         ];
     },
     images: {
-        domains: [
-            "firebasestorage.googleapis.com",
-            "lh3.googleusercontent.com",
-        ],
         remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "firebasestorage.googleapis.com",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
+                port: "",
+                pathname: "/**",
+            },
             {
                 protocol: "http",
                 hostname: "www.savourydays.com",
@@ -27,7 +36,4 @@ const nextConfig = {
         DATA_API_KEY_BE: process.env.DATA_API_KEY_BE,
         DATA_API_KEY_FE: process.env.DATA_API_KEY_FE,
     },
-    reactStrictMode: true,
 };
-
-module.exports = nextConfig;

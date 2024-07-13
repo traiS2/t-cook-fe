@@ -33,7 +33,7 @@ interface BlogSummary {
 
 interface DetailBlog {
     id: number;
-    name: string;
+    title: string;
     link: string;
     image: string;
     createAt: any;

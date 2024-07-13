@@ -1,34 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 export async function GET(req: NextRequest) {
+    
     const prisma = new PrismaClient();
 
-    const { searchParams } = new URL(req.url);
+    const limit = 3;
 
     try {
-        const position = parseInt(searchParams.get("position") || "1", 10);
-        const NUMBER_OF_BLOG_ON_A_PAGE = 2; // number of blogs displayed on a page
-
-        var takePage = NUMBER_OF_BLOG_ON_A_PAGE;
-
         const quatityBlog = await prisma.blog.count({
             where: {
                 status: "active",
             },
         });
 
-        const totalPage = Math.ceil(quatityBlog / NUMBER_OF_BLOG_ON_A_PAGE);
-
-        if (
-            position === totalPage &&
-            quatityBlog % NUMBER_OF_BLOG_ON_A_PAGE !== 0
-        ) {
-            takePage = quatityBlog % NUMBER_OF_BLOG_ON_A_PAGE;
-        }
-
         const summaryBlog = await prisma.blog.findMany({
-            take: takePage,
-            skip: position - 1,
+            take: 3,
+            skip: 0,
             orderBy: {
                 createAt: "desc",
             },
@@ -77,16 +64,9 @@ export async function GET(req: NextRequest) {
         }));
 
         if (flattendSummaryBlog) {
-            return NextResponse.json(
-                {
-                    blog: flattendSummaryBlog,
-                    totalPage: totalPage,
-                    position: position,
-                },
-                {
-                    status: 200,
-                }
-            );
+            return NextResponse.json(flattendSummaryBlog, {
+                status: 200,
+            });
         } else {
             return NextResponse.json(
                 { message: "Internal Server Error" },

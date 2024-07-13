@@ -26,7 +26,7 @@ export default function Blog({
     return (
         <div className="w-full h-auto border-b border-second-color my-8 ">
             <Link href={`/blog/${link}`}>
-                <h1 className="text-xl font-semibold uppercase text-fifth-color">
+                <h1 className="text-2xl font-semibold uppercase text-fifth-color">
                     {title}
                 </h1>
             </Link>

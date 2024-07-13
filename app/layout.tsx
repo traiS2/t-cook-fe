@@ -15,11 +15,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <React.StrictMode>
-                <body style={{ fontFamily: "Segoe UI, Arial, sans-serif" }}>
-                    <SessionProvider>{children}</SessionProvider>
-                </body>
-            </React.StrictMode>
+            <body style={{ fontFamily: "Segoe UI, Arial, sans-serif" }}>
+                <SessionProvider>{children}</SessionProvider>
+            </body>
         </html>
     );
 }

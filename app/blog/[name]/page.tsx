@@ -80,22 +80,22 @@ export default function Page({ params }: { params: { name: string } }) {
 
     return (
         <div className="min-h-[100vh]">
-            {/* <div className="flex w-full py-4 border-b border-second-color">
+            <div className="hidden w-full py-4 border-b border-second-color sm:flex">
                 <h1 className="w-full flex gap-2 italic text-base text-fifth-color font-normal">
                     Trang chủ <span className="text-sm">{` >> `}</span> Blog{" "}
-                    <span className="text-sm">{` >> `}</span> {detailBlog.name}
+                    <span className="text-sm">{` >> `}</span> {detailBlog.title}
                 </h1>
-            </div> */}
+            </div>
             <div className="flex flex-col w-full h-auto items-center justify-start border-b border-second-color pb-4    ">
                 <Image
                     src={detailBlog.image}
                     className="w-full pt-4"
-                    alt={detailBlog.name}
+                    alt={detailBlog.title}
                     width={610}
                     height={300}
                 />
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
-                    {detailBlog.name}
+                    {detailBlog.title}
                 </h1>
                 <p className="w-full h-auto items-center justify-start text-xs font-bold pt-1 text-second-color">
                     Đăng vào{" "}
@@ -192,7 +192,7 @@ export default function Page({ params }: { params: { name: string } }) {
                         textSize[textSizeIndex + 2 > 5 ? 5 : textSizeIndex + 2]
                     } font-normal uppercase text-fifth-color`}
                 >
-                    {detailBlog.name}
+                    {detailBlog.title}
                 </h1>
                 <h3
                     className={`font-semibold text-fourth-color pt-2 ${textSize[textSizeIndex]}`}
@@ -250,7 +250,7 @@ export default function Page({ params }: { params: { name: string } }) {
                                 <Image
                                     src={recipe.imageRecipe.url}
                                     className="w-full pt-1 pb-2"
-                                    alt={detailBlog.name + recipe}
+                                    alt={detailBlog.title + recipe}
                                     width={600}
                                     height={300}
                                 />
