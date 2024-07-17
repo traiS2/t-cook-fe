@@ -41,33 +41,28 @@ export default function BlogList({ position }: BlogListProps) {
     }, []);
 
     return (
-        <Suspense fallback={<Loading />}>
-            <div className="w-full h-auto mt-4">
-                {blogs?.map((blog) => (
-                    <Blog key={blog.id} {...blog} />
+        <div className="w-full h-auto mt-4">
+            {blogs?.map((blog) => (
+                <Blog key={blog.id} {...blog} />
+            ))}
+            <div className="flex justify-center items-center gap-1 mb-4 mt-[-16px]">
+                {pageNumbers.map((number) => (
+                    <Link href={`/blog/page/${number}`}>
+                        <p
+                            className={clsx(
+                                "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
+                                {
+                                    "bg-fifth-color text-white":
+                                        number === position,
+                                }
+                            )}
+                            key={number}
+                        >
+                            {number}
+                        </p>
+                    </Link>
                 ))}
-                <div className="flex justify-center items-center gap-1 mb-4 mt-[-16px]">
-                    {pageNumbers.map((number) => (
-                        <Link href={`/blog/page/${number}`}>
-                            <p
-                                className={clsx(
-                                    "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
-                                    {
-                                        "bg-fifth-color text-white":
-                                            number === position,
-                                    }
-                                )}
-                                key={number}
-                            >
-                                {number}
-                            </p>
-                        </Link>
-                    ))}
-                </div>
             </div>
-        </Suspense>
+        </div>
     );
-}
-function Loading() {
-    return <h2>🌀 Loadingasfasdffdfdfasdfasfasdfasfasfasfasdfadfasdf...</h2>;
 }

@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SidebarSkeleton from "@/app/skeleton/sidebar.skeleton";
 
 export default function Sidebar() {
     const [blogBrief, setBlogBrief] = useState<BlogBrief[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         getBlogBrief();
     }, []);
@@ -25,7 +27,13 @@ export default function Sidebar() {
             }
         } catch (error: any) {
             alert("Failed to fetch data at sidebar");
+        } finally {
+            setIsLoading(false);
         }
+    }
+
+    if (isLoading) {
+        return <SidebarSkeleton />;
     }
 
     return (

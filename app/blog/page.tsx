@@ -1,13 +1,14 @@
 "use client";
 import { Blog } from "@/app/ui";
-import { Suspense } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loading from "./loading";
 export default function Page() {
     const [blogs, setBlogs] = useState<BlogSummary[]>([]);
     const [totalPage, setTotalPage] = useState<number>(0);
     const pageNumbers = Array.from({ length: totalPage }, (_, i) => i + 1);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getBlogs = async () => {
         try {
@@ -30,6 +31,8 @@ export default function Page() {
             }
         } catch (error: any) {
             alert("Failed to fetch data at blog list");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -37,37 +40,35 @@ export default function Page() {
         getBlogs();
     }, []);
 
+    if (isLoading) {
+        return <Loading />;
+    }
+
     return (
         <div>
-            <Suspense fallback={<Loading />}>
-                <div className="w-full h-auto mt-4">
-                    {blogs?.map((blog) => (
-                        <Blog key={blog.id} {...blog} />
+            <div className="w-full  h-auto mt-4">
+                {blogs?.map((blog) => (
+                    <Blog key={blog.id} {...blog} />
+                ))}
+                <div className="flex justify-center items-center gap-1 mb-4 mt-[-16px]">
+                    {pageNumbers.map((number) => (
+                        <Link href={`/blog/page/${number}`}>
+                            <p
+                                className={clsx(
+                                    "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
+                                    {
+                                        "bg-fifth-color text-white":
+                                            number === 1,
+                                    }
+                                )}
+                                key={number}
+                            >
+                                {number}
+                            </p>
+                        </Link>
                     ))}
-                    <div className="flex justify-center items-center gap-1 mb-4 mt-[-16px]">
-                        {pageNumbers.map((number) => (
-                            <Link href={`/blog/page/${number}`}>
-                                <p
-                                    className={clsx(
-                                        "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
-                                        {
-                                            "bg-fifth-color text-white":
-                                                number === 1,
-                                        }
-                                    )}
-                                    key={number}
-                                >
-                                    {number}
-                                </p>
-                            </Link>
-                        ))}
-                    </div>
                 </div>
-            </Suspense>
+            </div>
         </div>
     );
-}
-
-function Loading() {
-    return <h2>🌀 Loading...</h2>;
 }

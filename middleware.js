@@ -15,5 +15,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/api/category", "/dashboard/blog/create"],
+    matcher: ["/dashboard/:path*", "/dashboard/blog/create"],
 };
