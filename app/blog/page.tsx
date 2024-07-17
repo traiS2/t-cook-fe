@@ -51,8 +51,8 @@ export default function Page() {
                     <Blog key={blog.id} {...blog} />
                 ))}
                 <div className="flex justify-center items-center gap-1 mb-4 mt-[-16px]">
-                    {pageNumbers.map((number) => (
-                        <Link key={number} href={`/blog/page/${number}`}>
+                    {pageNumbers.map((number, index) => (
+                        <Link key={index} href={`/blog/page/${number}`}>
                             <p
                                 className={clsx(
                                     "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
