@@ -13,14 +13,15 @@ export default function Page() {
     const getBlogs = async () => {
         try {
             const res = await fetch(
-                process.env.DATA_API_KEY_FE + "/api/blog/summary?position=1"
+                process.env.DATA_API_KEY_FE + "/api/blog/summary?position=1",
 
-                // {
-                //     next: {
-                //         revalidate: 86400,
-                //     },
-                //     cache: "force-cache",
-                // }
+                {
+                    headers: { "Content-Type": "application/json" },
+                    //     next: {
+                    //         revalidate: 86400,
+                    //     },
+                    //     cache: "force-cache",
+                }
             );
             if (res.ok) {
                 const data = await res.json();
@@ -30,7 +31,8 @@ export default function Page() {
                 alert("Failed to fetch data at blog list");
             }
         } catch (error: any) {
-            alert("Failed to fetch data at blog list");
+            alert("Error to fetch data at blog list" + error);
+            console.log(error);
         } finally {
             setIsLoading(false);
         }

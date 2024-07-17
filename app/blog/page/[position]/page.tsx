@@ -15,14 +15,15 @@ export default function Page({ params }: { params: { position: string } }) {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE +
                     "/api/blog/summary?position=" +
-                    params.position
+                    params.position,
 
-                // {
-                //     next: {
-                //         revalidate: 86400,
-                //     },
-                //     cache: "force-cache",
-                // }
+                {
+                    headers: { "Content-Type": "application/json" },
+                    //     next: {
+                    //         revalidate: 86400,
+                    //     },
+                    //     cache: "force-cache",
+                }
             );
             if (res.ok) {
                 const data = await res.json();
@@ -60,7 +61,8 @@ export default function Page({ params }: { params: { position: string } }) {
                                     "flex justify-center items-center w-6 h-6 font-semibold text-second-color  border-[1px] border-second-color hover:bg-fifth-color hover:text-white",
                                     {
                                         "bg-fifth-color text-white":
-                                            number === 1,
+                                            number ===
+                                            parseInt(params.position),
                                     }
                                 )}
                                 key={number}
