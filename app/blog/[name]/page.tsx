@@ -17,16 +17,16 @@ export default function Page({ params }: { params: { name: string } }) {
 
     const [detailBlog, setDetailBlog] = useState<DetailBlog>({} as DetailBlog);
 
-    const getDetailBlog = useCallback(async () => {
+    const getDetailBlog = async () => {
         try {
             const response = await fetch(
-                `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
-                {
-                    cache: "force-cache",
-                    next: {
-                        revalidate: 8640,
-                    },
-                }
+                `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`
+                // {
+                //     cache: "force-cache",
+                //     next: {
+                //         revalidate: 8640,
+                //     },
+                // }
             );
             if (response.ok) {
                 const blog = await response.json();
@@ -43,11 +43,11 @@ export default function Page({ params }: { params: { name: string } }) {
                 "Failed to error fetch data at blog detail: " + error.message
             );
         }
-    }, [params.name]);
+    };
 
     useEffect(() => {
         getDetailBlog();
-    });
+    }, []);
 
     type TextSizeType = {
         [key: number]: string;

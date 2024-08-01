@@ -6,7 +6,7 @@ export default function Footer() {
                 <div className="w-1/3 lg:w-1/3">
                     <FeaturedTags />
                 </div>
-                <div className="w-2/3 lg:w-2/3">
+                <div className="w-2/3 lg:w-2/3 lg:">
                     <FeaturedBlogs />
                 </div>
             </div>
