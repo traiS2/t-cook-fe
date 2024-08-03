@@ -16,6 +16,7 @@ export default function Sidebar() {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/blog/brief",
                 {
+                    mode: 'no-cors',
                     next: { revalidate: 86400 },
                     cache: "force-cache",
                 }
