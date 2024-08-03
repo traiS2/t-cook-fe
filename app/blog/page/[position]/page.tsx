@@ -18,6 +18,7 @@ export default function Page({ params }: { params: { position: string } }) {
                     params.position,
 
                 {
+                    headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {
                         revalidate: 8640,

@@ -24,6 +24,7 @@ export default function Page({ params }: { params: { name: string } }) {
             const response = await fetch(
                 `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
                 {
+                    headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {
                         revalidate: 8640,

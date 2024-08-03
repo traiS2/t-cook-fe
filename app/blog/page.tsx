@@ -15,18 +15,12 @@ export default function Page() {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/blog/summary?position=1",
                 {
+                    headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {
                         revalidate: 8640,
                     },
                 }
-                // {
-                //     headers: { "Content-Type": "application/json" },
-                //     //     next: {
-                //     //         revalidate: 86400,
-                //     //     },
-                //     //     cache: "force-cache",
-                // }
             );
             if (res.ok) {
                 const data = await res.json();
