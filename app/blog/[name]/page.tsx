@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Alarm,
     Person,
@@ -11,22 +11,24 @@ import {
 } from "react-bootstrap-icons";
 import { format, parseISO } from "date-fns";
 import { vi } from "date-fns/locale";
+import Loading from "./loading";
 
 export default function Page({ params }: { params: { name: string } }) {
     // const params = useParams<{ content: string }>();
 
     const [detailBlog, setDetailBlog] = useState<DetailBlog>({} as DetailBlog);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getDetailBlog = async () => {
         try {
             const response = await fetch(
-                `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`
-                // {
-                //     cache: "force-cache",
-                //     next: {
-                //         revalidate: 8640,
-                //     },
-                // }
+                `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
+                {
+                    cache: "force-cache",
+                    next: {
+                        revalidate: 8640,
+                    },
+                }
             );
             if (response.ok) {
                 const blog = await response.json();
@@ -35,13 +37,13 @@ export default function Page({ params }: { params: { name: string } }) {
                 });
                 blog.createAt = formattedDate;
                 setDetailBlog(blog);
-            } else {
-                alert("Failed to fetch data at blog detail");
             }
         } catch (error: any) {
             alert(
                 "Failed to error fetch data at blog detail: " + error.message
             );
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -78,8 +80,12 @@ export default function Page({ params }: { params: { name: string } }) {
         }
     };
 
+    if (isLoading) {
+        return <Loading />;
+    }
+
     return (
-        <div className="min-h-[100vh]">
+        <div className="marker:min-h-[100vh]">
             <div className="hidden w-full py-4 border-b border-second-color sm:flex">
                 <h1 className="w-full flex gap-2 italic text-base text-fifth-color font-normal">
                     Trang chủ <span className="text-sm">{` >> `}</span> Blog{" "}
@@ -104,7 +110,11 @@ export default function Page({ params }: { params: { name: string } }) {
                     </span>{" "}
                     | trong{" "}
                     <span className="font-medium text-fifth-color">
-                        {/* {blog.category} */}
+                        <span>
+                            {detailBlog.category
+                                .map((cat) => cat.name)
+                                .join(", ")}
+                        </span>
                     </span>{" "}
                     bởi{" "}
                     <span className="font-medium text-fifth-color">
@@ -260,4 +270,26 @@ export default function Page({ params }: { params: { name: string } }) {
             </div>
         </div>
     );
+}
+
+interface DetailBlog {
+    id: number;
+    title: string;
+    link: string;
+    image: string;
+    createAt: any;
+    category: Category[];
+    introduction: Introduction[];
+    levelOfDifficult: number;
+    cookingTime: number;
+    servingSize: number;
+    ingredient: Ingredient[];
+    recipe: Recipe[];
+    // tag: Tag[];
+    user: User;
+}
+
+interface Category {
+    id: number;
+    name: string;
 }

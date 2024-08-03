@@ -14,7 +14,12 @@ export default function Page() {
         try {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/blog/summary?position=1",
-
+                {
+                    cache: "force-cache",
+                    next: {
+                        revalidate: 8640,
+                    },
+                }
                 // {
                 //     headers: { "Content-Type": "application/json" },
                 //     //     next: {

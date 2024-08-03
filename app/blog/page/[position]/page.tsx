@@ -18,11 +18,10 @@ export default function Page({ params }: { params: { position: string } }) {
                     params.position,
 
                 {
-                    headers: { "Content-Type": "application/json" },
-                    //     next: {
-                    //         revalidate: 86400,
-                    //     },
-                    //     cache: "force-cache",
+                    cache: "force-cache",
+                    next: {
+                        revalidate: 8640,
+                    },
                 }
             );
             if (res.ok) {

@@ -19,6 +19,16 @@ export async function GET(request: NextRequest) {
                 cookingTime: true,
                 servingSize: true,
                 createAt: true,
+                category: {
+                    select: {
+                        category: {
+                            select: {
+                                id: true,
+                                name: true,
+                            },
+                        },
+                    },
+                },
                 user: {
                     select: {
                         name: true,
@@ -68,9 +78,15 @@ export async function GET(request: NextRequest) {
                 },
             },
         });
-
+        const newBlog = {
+            ...blog,
+            category: blog?.category.map((category) => ({
+                id: category.category.id,
+                name: category.category.name,
+            })),
+        };
         if (blog) {
-            return Response.json(blog, { status: 200 });
+            return Response.json(newBlog, { status: 200 });
         } else {
             return NextResponse.json(
                 { message: "Internal Server Error" },
