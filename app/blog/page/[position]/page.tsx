@@ -40,7 +40,7 @@ export default function Page({ params }: { params: { position: string } }) {
 
     useEffect(() => {
         getBlogs();
-    }, []);
+    }, [params.position]);
 
     if (isLoading) {
         return <Loading />;

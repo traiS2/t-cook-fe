@@ -221,7 +221,7 @@ export default function ThirdStep() {
         await Promise.all(promises);
     };
 
-    const getCategories = useCallback(async () => {
+    const getCategories = async () => {
         try {
             const categoriesJson = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/category",
@@ -249,9 +249,9 @@ export default function ThirdStep() {
                 { status: 500 }
             );
         }
-    }, []);
+    };
 
-    const getTags = useCallback(async () => {
+    const getTags = async () => {
         try {
             const tagsJson = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/tag"
@@ -268,7 +268,7 @@ export default function ThirdStep() {
                 { status: 500 }
             );
         }
-    }, []);
+    };
 
     useEffect(() => {
         getCategories();

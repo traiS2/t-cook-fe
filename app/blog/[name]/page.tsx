@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { name: string } }) {
 
     useEffect(() => {
         getDetailBlog();
-    }, []);
+    }, [params.name]);
 
     type TextSizeType = {
         [key: number]: string;
@@ -111,7 +111,7 @@ export default function Page({ params }: { params: { name: string } }) {
                     | trong{" "}
                     <span className="font-medium text-fifth-color">
                         <span>
-                            {detailBlog.category
+                            {detailBlog?.category
                                 .map((cat) => cat.name)
                                 .join(", ")}
                         </span>

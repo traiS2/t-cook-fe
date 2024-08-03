@@ -38,7 +38,7 @@ export default function BlogList({ position }: BlogListProps) {
 
     useEffect(() => {
         getBlogs();
-    }, []);
+    }, [position]);
 
     return (
         <div className="w-full h-auto mt-4">
