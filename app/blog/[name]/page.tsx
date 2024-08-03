@@ -24,6 +24,7 @@ export default function Page({ params }: { params: { name: string } }) {
             const response = await fetch(
                 `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
                 {
+                    mode: 'no-cors',
                     headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {

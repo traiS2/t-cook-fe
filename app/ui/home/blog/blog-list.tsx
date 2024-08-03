@@ -16,13 +16,14 @@ export default function BlogList({ position }: BlogListProps) {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE +
                     "/api/blog/summary?position=" +
-                    position
-                // {
-                //     next: {
-                //         revalidate: 86400,
-                //     },
-                //     cache: "force-cache",
-                // }
+                    position,
+                {
+                    mode: "no-cors",
+                    next: {
+                        revalidate: 86400,
+                    },
+                    cache: "force-cache",
+                }
             );
             if (res.ok) {
                 const data = await res.json();
