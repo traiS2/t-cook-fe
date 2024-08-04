@@ -8,6 +8,11 @@ module.exports = {
                 destination: "/blog",
                 permanent: true,
             },
+            {
+                source: "/api/:path*",
+                destination:
+                    "https://t-cook-fe-trais2s-projects.vercel.app/api/:path*",
+            },
         ];
     },
     images: {
