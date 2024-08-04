@@ -13,6 +13,7 @@ import { format, parseISO } from "date-fns";
 import { vi } from "date-fns/locale";
 import Loading from "./loading";
 
+
 export default function Page({ params }: { params: { name: string } }) {
     // const params = useParams<{ content: string }>();
 
@@ -24,7 +25,6 @@ export default function Page({ params }: { params: { name: string } }) {
             const response = await fetch(
                 `${process.env.DATA_API_KEY_FE}/api/blog/detail/${params.name}`,
                 {
-                    mode: 'no-cors',
                     headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {
@@ -103,19 +103,19 @@ export default function Page({ params }: { params: { name: string } }) {
                     height={300}
                 />
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
-                    {detailBlog.title}
+                    {detailBlog?.title}
                 </h1>
                 <p className="w-full h-auto items-center justify-start text-xs font-bold pt-1 text-second-color">
                     Đăng vào{" "}
                     <span className="font-medium text-fifth-color">
-                        {detailBlog.createAt}
+                        {detailBlog?.createAt}
                     </span>{" "}
                     | trong{" "}
                     <span className="font-medium text-fifth-color">
                         <span>
-                            {detailBlog?.category
-                                .map((cat) => cat.name)
-                                .join(", ")}
+                            {detailBlog?.category.map((cat) => (
+                                <p>{cat.name}</p>
+                            ))}
                         </span>
                     </span>{" "}
                     bởi{" "}
@@ -274,24 +274,3 @@ export default function Page({ params }: { params: { name: string } }) {
     );
 }
 
-interface DetailBlog {
-    id: number;
-    title: string;
-    link: string;
-    image: string;
-    createAt: any;
-    category: Category[];
-    introduction: Introduction[];
-    levelOfDifficult: number;
-    cookingTime: number;
-    servingSize: number;
-    ingredient: Ingredient[];
-    recipe: Recipe[];
-    // tag: Tag[];
-    user: User;
-}
-
-interface Category {
-    id: number;
-    name: string;
-}

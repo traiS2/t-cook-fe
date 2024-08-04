@@ -20,6 +20,30 @@ interface BlogBrief {
     image: string;
 }
 
+interface DetailBlog {
+    id: number;
+    title: string;
+    link: string;
+    image: string;
+    createAt: any;
+    category: Category[];
+    introduction: Introduction[];
+    levelOfDifficult: number;
+    cookingTime: number;
+    servingSize: number;
+    ingredient: Ingredient[];
+    recipe: Recipe[];
+    // tag: Tag[];
+    user: User;
+}
+
+
+interface Category {
+    id: number;
+    name: string;
+}
+
+
 interface BlogSummary {
     id: number;
     title: string;
@@ -28,22 +52,6 @@ interface BlogSummary {
     createAt: Date;
     introduction: Introduction[];
     tag: Tag[];
-    user: User;
-}
-
-interface DetailBlog {
-    id: number;
-    title: string;
-    link: string;
-    image: string;
-    createAt: any;
-    introduction: Introduction[];
-    levelOfDifficult: number;
-    cookingTime: number;
-    servingSize: number;
-    ingredient: Ingredient[];
-    recipe: Recipe[];
-    // tag: Tag[];
     user: User;
 }
 
