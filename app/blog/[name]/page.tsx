@@ -13,7 +13,6 @@ import { format, parseISO } from "date-fns";
 import { vi } from "date-fns/locale";
 import Loading from "./loading";
 
-
 export default function Page({ params }: { params: { name: string } }) {
     // const params = useParams<{ content: string }>();
 
@@ -114,7 +113,7 @@ export default function Page({ params }: { params: { name: string } }) {
                     <span className="font-medium text-fifth-color">
                         <span>
                             {detailBlog?.category.map((cat) => (
-                                <p>{cat.name}</p>
+                                <p key={cat.id}>{cat.name}</p>
                             ))}
                         </span>
                     </span>{" "}
@@ -273,4 +272,3 @@ export default function Page({ params }: { params: { name: string } }) {
         </div>
     );
 }
-
