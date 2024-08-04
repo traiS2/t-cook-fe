@@ -104,7 +104,7 @@ export default function Page({ params }: { params: { name: string } }) {
                 <h1 className="flex w-full h-auto items-center justify-start pt-4 text-2xl font-semibold uppercase text-fifth-color ">
                     {detailBlog?.title}
                 </h1>
-                <p className="w-full h-auto items-center justify-start text-xs font-bold pt-1 text-second-color">
+                <p className="w-full flex h-auto items-center justify-start text-xs font-bold pt-1 text-second-color">
                     Đăng vào{" "}
                     <span className="font-medium text-fifth-color">
                         {detailBlog?.createAt}
