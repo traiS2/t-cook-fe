@@ -15,8 +15,6 @@ export default function Page() {
             const res = await fetch(
                 process.env.DATA_API_KEY_FE + "/api/blog/summary?position=1",
                 {
-                    mode: 'no-cors',
-                    headers: { "Content-Type": "application/json" },
                     cache: "force-cache",
                     next: {
                         revalidate: 8640,
@@ -27,8 +25,6 @@ export default function Page() {
                 const data = await res.json();
                 setBlogs(data.blog);
                 setTotalPage(data.totalPage);
-            } else {
-                alert("Failed to fetch data at blog list");
             }
         } catch (error: any) {
             alert("Error to fetch data at blog list" + error);
